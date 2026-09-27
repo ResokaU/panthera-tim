@@ -89,12 +89,26 @@
     background:linear-gradient(90deg,var(--purple),var(--red));
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   }
-  .nav-links{display:flex;align-items:center;gap:1.6rem}
+  .nav-links{display:flex;align-items:center;gap:1.4rem}
   .nav-links a{
     color:var(--muted);text-decoration:none;font-weight:500;font-size:.95rem;
     transition:color .25s;
   }
   .nav-links a:hover{color:var(--text)}
+  .btn-cringe{
+    font-family:'Unbounded',sans-serif;font-weight:600;font-size:.72rem;
+    letter-spacing:.06em;color:#fff;cursor:pointer;
+    padding:.55rem 1.1rem;border-radius:999px;border:2px solid transparent;
+    background:
+      linear-gradient(#0b0a1d,#0b0a1d) padding-box,
+      linear-gradient(90deg,#ff2d55,#facc15,#4ade80,#22d3ee,#a855f7) border-box;
+    background-size:100% 100%, 300% 100%;
+    animation:rainbowBorder 3s linear infinite;
+    transition:transform .25s;
+  }
+  .btn-cringe:hover{transform:scale(1.08)}
+  body.cringe .btn-cringe{animation:rainbowBorder .8s linear infinite}
+  @keyframes rainbowBorder{to{background-position:0 0, 300% 0}}
 
   /* ---------- кнопки ---------- */
   .btn{
@@ -128,10 +142,20 @@
 
   /* ---------- hero ---------- */
   .hero{
+    position:relative;
     min-height:100vh;
     display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:2.5rem;
     padding:7.5rem 6vw 4rem;
     max-width:1300px;margin:0 auto;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:url('images/panther2.jpg') right 20% center/cover no-repeat;
+    opacity:.20;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:linear-gradient(90deg, var(--bg) 8%, rgba(5,5,15,.45) 60%, transparent);
   }
   .badge{
     display:inline-flex;align-items:center;gap:.5rem;
@@ -331,14 +355,44 @@
 
   /* ---------- дисциплины ---------- */
   .games-grid{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.3rem;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.3rem;
   }
-  .game-card{padding:1.8rem 1.6rem 1.7rem}
-  .game-card .icon{
-    display:block;font-size:2.5rem;margin-bottom:1rem;
-    filter:drop-shadow(0 0 14px var(--c));
+  .game-card{padding:1.6rem 1.5rem 1.6rem}
+  .game-img{
+    position:relative;height:140px;border-radius:14px;overflow:hidden;
+    margin-bottom:1.05rem;display:grid;place-items:center;
+    border:1px solid color-mix(in srgb, var(--c) 45%, transparent);
+    background:linear-gradient(180deg,#12102c,#0a081d);
+  }
+  .game-img img.cover{width:100%;height:100%;object-fit:cover}
+  .game-img img.contain{max-width:78%;max-height:74%;object-fit:contain}
+  .game-img img.to-white{filter:brightness(0) invert(1) drop-shadow(0 0 12px rgba(34,211,238,.45))}
+  .game-img img.glow-green{filter:drop-shadow(0 0 18px rgba(74,222,128,.55))}
+  .game-img .gemoji{
+    position:absolute;right:9px;bottom:7px;font-size:1.35rem;
+    filter:drop-shadow(0 0 8px var(--c));
   }
   .game-card h3{font-size:1.15rem;margin-bottom:.45rem}
+
+  /* ---------- кринж-галерея ---------- */
+  .gal-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;
+  }
+  .gal{
+    background:#000;padding:13px 13px 17px;
+    border:1px solid rgba(255,255,255,.14);border-radius:6px;
+    transition:transform .35s;
+  }
+  .gal:hover{transform:rotate(-1.6deg) scale(1.035)}
+  .gal img{
+    width:100%;height:200px;object-fit:cover;display:block;border-radius:2px;
+  }
+  .gal figcaption{
+    font-family:'Impact','Arial Black',sans-serif;
+    font-size:1.02rem;letter-spacing:.03em;text-transform:uppercase;
+    color:#fff;text-align:center;margin-top:12px;line-height:1.3;
+    text-shadow:0 2px 0 rgba(0,0,0,.85);
+  }
 
   /* ---------- discord cta ---------- */
   .cta-panel{
@@ -375,6 +429,52 @@
   .paws{font-size:1.5rem;letter-spacing:2rem;margin-bottom:1.2rem;opacity:.5}
   .paws span{display:inline-block}
   .paws span:nth-child(even){transform:translateY(7px)}
+  .credits{margin-top:.7rem;font-size:.78rem;opacity:.6}
+
+  /* ---------- эмодзи-взрывы ---------- */
+  .boom{
+    position:fixed;z-index:99;pointer-events:none;
+    animation:boomUp ease-out forwards;
+  }
+  @keyframes boomUp{
+    0%{opacity:1;transform:translate(0,0) rotate(0) scale(.5)}
+    100%{opacity:0;transform:translate(var(--dx),-150px) rotate(var(--rot)) scale(1.5)}
+  }
+
+  /* ---------- КРИНЖ-РЕЖИМ 🌈 ---------- */
+  @keyframes hueSpin{to{filter:hue-rotate(360deg)}}
+  body.cringe .grad-text,
+  body.cringe .marquee-track span{
+    background:linear-gradient(90deg,#ff2d55,#facc15,#4ade80,#22d3ee,#a855f7,#ec4899,#ff2d55);
+    background-size:1000% 100%;
+    animation:gradShift 1.2s linear infinite;
+  }
+  body.cringe .tagline,
+  body.cringe .card p,
+  body.cringe .gal figcaption,
+  body.cringe footer,
+  body.cringe .cta-panel .sub{
+    font-family:'Comic Sans MS','Comic Neue',cursive;
+  }
+  body.cringe .team-grid,
+  body.cringe .games-grid,
+  body.cringe .gal-grid,
+  body.cringe nav,
+  body.cringe .cta-panel{animation:hueSpin 3.5s linear infinite}
+  body.cringe .panther{animation:hueSpin 2.2s linear infinite}
+  body.cringe .panther-wrap::before{
+    background:conic-gradient(#ff2d55,#facc15,#4ade80,#22d3ee,#a855f7,#ec4899,#ff2d55);
+    filter:blur(34px);opacity:.5;
+    animation:spin 4s linear infinite;
+  }
+  body.cringe .marquee-track{animation-duration:7s}
+  body.cringe .btn-primary{
+    background:linear-gradient(135deg,#ff2d55,#facc15,#4ade80,#22d3ee,#a855f7);
+    background-size:300% 100%;
+    animation:gradShift 2s linear infinite, btnPulse 1.2s ease-in-out infinite;
+  }
+  body.cringe .scanlines{opacity:.7}
+  body.cringe .hero::before{opacity:.45}
 
   /* ---------- появление при скролле ---------- */
   .reveal{
@@ -388,6 +488,7 @@
     .hero{grid-template-columns:1fr;padding-top:6.5rem;gap:3rem}
     .nav-links a.nav-page{display:none}
     .panther-wrap{width:min(400px,86vw)}
+    .hero::before{opacity:.12}
   }
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
@@ -408,7 +509,9 @@
   <div class="nav-links">
     <a class="nav-page" href="#team">Состав</a>
     <a class="nav-page" href="#games">Игры</a>
+    <a class="nav-page" href="#gallery">Галерея</a>
     <a class="nav-page" href="#discord">Discord</a>
+    <button class="btn-cringe" id="cringeBtn" aria-pressed="false">🌈 КРИНЖ-РЕЖИМ</button>
     <a class="btn btn-primary btn-small" href="https://discord.gg/ranMNxS6A" target="_blank" rel="noopener">Вступить</a>
   </div>
 </nav>
@@ -545,7 +648,7 @@
           <path d="M330,312 Q374,326 406,344"/>
         </g>
       </svg>
-      <div class="panther-hint">нажми на пантеру 🐾</div>
+      <div class="panther-hint">нажми на пантеру 🐾 (со звуком!)</div>
     </div>
   </div>
 </header>
@@ -608,28 +711,80 @@
 
     <div class="games-grid">
       <article class="card game-card reveal" style="--c:#ff2d55;--d:.0s">
-        <span class="icon">⚔️</span>
+        <div class="game-img">
+          <img class="contain" src="images/dota.png" alt="Логотип Dota 2" loading="lazy">
+          <span class="gemoji">⚔️</span>
+        </div>
         <h3>Dota 2</h3>
         <p>Мид или фид — третьего не дано. Пуш, ганг и полный разнос лобби.</p>
       </article>
 
       <article class="card game-card reveal" style="--c:#22d3ee;--d:.08s">
-        <span class="icon">🔫</span>
+        <div class="game-img">
+          <img class="contain to-white" src="images/cs2.png" alt="Логотип Counter-Strike 2" loading="lazy">
+          <span class="gemoji">🔫</span>
+        </div>
         <h3>Standoff 2</h3>
         <p>Клатч за клатчем. Экран трясётся, карта зачищена, враги в тильте.</p>
       </article>
 
       <article class="card game-card reveal" style="--c:#facc15;--d:.16s">
-        <span class="icon">🐔</span>
+        <div class="game-img">
+          <img class="cover" src="images/chicken.jpg" alt="Белая курица" loading="lazy">
+          <span class="gemoji">🐔</span>
+        </div>
         <h3>Chicken Gun</h3>
         <p>Куры с дробовиками. Звучит смешно — вылетают с сервера все.</p>
       </article>
 
       <article class="card game-card reveal" style="--c:#4ade80;--d:.24s">
-        <span class="icon">⛏️</span>
+        <div class="game-img">
+          <img class="contain glow-green" src="images/creeper.png" alt="Крипер из Minecraft" loading="lazy">
+          <span class="gemoji">⛏️</span>
+        </div>
         <h3>Minecraft</h3>
         <p>Наша база — наша крепость. Гриферы уходят со слезами и без алмазов.</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= КРИНЖ-ГАЛЕРЕЯ ================= -->
+<section id="gallery">
+  <div class="section-inner">
+    <div class="kicker reveal">/// кринж-галерея</div>
+    <h2 class="reveal" style="--d:.05s">ФОТКИ ПРАЙДА<br><span class="grad-text">БЕЗ ФИЛЬТРОВ</span></h2>
+
+    <div class="gal-grid">
+      <figure class="gal reveal" style="--d:.0s">
+        <img src="images/panther.jpg" alt="Чёрная пантера лежит" loading="lazy">
+        <figcaption>ШАФ НА СОЗВОНЕ. НЕ БУДИТЬ 🖤</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.07s">
+        <img src="images/cat.jpg" alt="Чёрный кот с жёлтыми глазами" loading="lazy">
+        <figcaption>РИТА ЗАХОДИТ В КАТКУ (МИНУТА 20-Я)</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.14s">
+        <img src="images/chicken.jpg" alt="Курица с причёской" loading="lazy">
+        <figcaption>МАКСИМ НА РЕСПАВНЕ В CHICKEN GUN 🐔</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.21s">
+        <img src="images/keyboard.jpg" alt="RGB клавиатура" loading="lazy">
+        <figcaption>ОРУЖИЕ ПРАЙДА. КЛАВИАТУРА ВАЛЕРЫ</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.28s">
+        <img src="images/setup.jpg" alt="Геймерский сетап с RGB" loading="lazy">
+        <figcaption>ШТАБ ПРАЙДА, 3 ЧАСА НОЧИ 💻</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.35s">
+        <img src="images/panther2.jpg" alt="Чёрный ягуар смотрит" loading="lazy">
+        <figcaption>ВАЛЕРА СМОТРИТ, КАК ТЫ ФИДИШЬ 👁️</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -651,6 +806,7 @@
 <footer>
   <div class="paws" aria-hidden="true"><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span></div>
   <div>ПАНТЕРА ТИМ © 2026 · прайд бьёт первым 🖤</div>
+  <div class="credits">фотки: Wikimedia Commons · логотипы принадлежат их владельцам</div>
 </footer>
 
 <script>
@@ -695,12 +851,69 @@
     glow.style.transform = `translate(${e.clientX - 260}px, ${e.clientY - 260}px)`;
   });
 
+  // рык пантеры: звук через WebAudio (без файлов)
+  let actx;
+  function roarSound() {
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      const t = actx.currentTime, dur = 1.1;
+      const buf = actx.createBuffer(1, actx.sampleRate * dur, actx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 1.6);
+      const src = actx.createBufferSource(); src.buffer = buf;
+      const filt = actx.createBiquadFilter(); filt.type = 'lowpass';
+      filt.frequency.setValueAtTime(900, t);
+      filt.frequency.exponentialRampToValueAtTime(120, t + dur);
+      const g = actx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.5, t + 0.06);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      const osc = actx.createOscillator(); osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(130, t);
+      osc.frequency.exponentialRampToValueAtTime(48, t + dur);
+      const og = actx.createGain();
+      og.gain.setValueAtTime(0.25, t);
+      og.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      src.connect(filt).connect(g).connect(actx.destination);
+      osc.connect(og).connect(actx.destination);
+      src.start(t); osc.start(t); osc.stop(t + dur);
+    } catch (e) {}
+  }
+
   // рык по клику
   const wrap = document.getElementById('panther');
   wrap.addEventListener('click', () => {
     wrap.classList.remove('roar');
     void wrap.offsetWidth;
     wrap.classList.add('roar');
+    roarSound();
+  });
+
+  // КРИНЖ-РЕЖИМ 🌈
+  const cringeBtn = document.getElementById('cringeBtn');
+  cringeBtn.addEventListener('click', () => {
+    const on = document.body.classList.toggle('cringe');
+    cringeBtn.setAttribute('aria-pressed', on);
+    cringeBtn.textContent = on ? '🔥 КРИНЖ ВКЛЮЧЁН' : '🌈 КРИНЖ-РЕЖИМ';
+  });
+
+  // взрывы эмодзи при клике в кринж-режиме
+  const EMOJI = ['🔥','🐾','💖','💯','✨','😎','🐔','👑','🌪️','🐆'];
+  document.addEventListener('click', e => {
+    if (!document.body.classList.contains('cringe')) return;
+    for (let i = 0; i < 10; i++) {
+      const s = document.createElement('span');
+      s.className = 'boom';
+      s.textContent = EMOJI[Math.floor(Math.random() * EMOJI.length)];
+      s.style.left = (e.clientX + (Math.random() * 80 - 40)) + 'px';
+      s.style.top = (e.clientY + (Math.random() * 40 - 20)) + 'px';
+      s.style.fontSize = (Math.random() * 22 + 16) + 'px';
+      s.style.setProperty('--dx', (Math.random() * 140 - 70) + 'px');
+      s.style.setProperty('--rot', (Math.random() * 360 - 180) + 'deg');
+      s.style.animationDuration = (Math.random() * .7 + .8) + 's';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 1700);
+    }
   });
 </script>
 </body>
