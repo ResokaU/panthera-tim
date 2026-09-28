@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>ПАНТЕРА ТИМ — СМЕШНОЙ ВИДОС</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐆</text></svg>">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:100%; height:100%; overflow:hidden; background:#05050f; font-family:"Segoe UI", "Arial Black", Arial, sans-serif; color:#fff; }
+  body { position:relative; }
+
+  /* ---------- фон ---------- */
+  .bg-grid { position:fixed; inset:-50%; background:
+    repeating-linear-gradient(0deg, transparent 0 46px, rgba(255,0,150,.08) 46px 48px),
+    repeating-linear-gradient(90deg, transparent 0 46px, rgba(0,255,220,.08) 46px 48px);
+    transform:perspective(600px) rotateX(60deg); animation:gridmove 6s linear infinite; z-index:0; }
+  @keyframes gridmove { to { background-position:0 96px, 96px 0; } }
+  .bg-glow { position:fixed; inset:0; z-index:0;
+    background:radial-gradient(ellipse 60% 50% at 50% 30%, rgba(255,0,150,.18), transparent 70%),
+               radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,200,255,.15), transparent 70%); }
+  .scan { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.25;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.35) 0 2px, transparent 2px 4px); }
+  .vig { position:fixed; inset:0; z-index:59; pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.75) 100%); }
+
+  /* ---------- рамки ---------- */
+  .topbar { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:space-between; align-items:center;
+    padding:16px 26px; font-weight:900; letter-spacing:1px; }
+  .chip { background:rgba(0,0,0,.55); border:2px solid #ff0096; border-radius:12px; padding:8px 16px; font-size:20px;
+    text-shadow:0 0 12px #ff0096; box-shadow:0 0 18px rgba(255,0,150,.4); }
+  .chip.cy { border-color:#00e5ff; text-shadow:0 0 12px #00e5ff; box-shadow:0 0 18px rgba(0,229,255,.4); }
+  .live { color:#ff2b2b; animation:blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity:.2; } }
+  .botbar { position:fixed; bottom:0; left:0; right:0; z-index:50; padding:14px 26px; }
+  .tcode { font-size:16px; font-weight:800; color:#9be8ff; letter-spacing:3px; margin-bottom:8px; }
+  .pbar { height:10px; border-radius:99px; background:rgba(255,255,255,.12); overflow:hidden; border:1px solid rgba(255,255,255,.2); }
+  .pbar i { display:block; height:100%; width:0%; background:linear-gradient(90deg,#ff0096,#ff7a00,#ffe600,#00e5ff); border-radius:99px; }
+
+  /* ---------- сцены ---------- */
+  #stage { position:fixed; inset:0; z-index:10; }
+  .scene { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center; gap:22px; padding:90px 60px; opacity:0; transition:opacity .45s; }
+  .scene.on { opacity:1; }
+
+  .kicker { font-size:24px; font-weight:800; letter-spacing:6px; color:#00e5ff; text-shadow:0 0 14px #00e5ff; }
+  .big { font-size:84px; font-weight:900; line-height:1.02; letter-spacing:2px;
+    text-shadow:0 0 30px rgba(255,0,150,.8), 4px 4px 0 #000; }
+  .grad { background:linear-gradient(90deg,#ff0096,#ff7a00,#ffe600,#00e5ff,#a855f7,#ff0096); background-size:300% 100%;
+    -webkit-background-clip:text; background-clip:text; color:transparent; animation:slide 3s linear infinite; }
+  @keyframes slide { to { background-position:300% 0; } }
+  .pop { animation:pop .55s cubic-bezier(.2,1.6,.4,1) both; }
+  @keyframes pop { from { transform:scale(.2) rotate(-8deg); opacity:0; } to { transform:scale(1) rotate(0); opacity:1; } }
+  .shake { animation:shk .12s linear 8; }
+  @keyframes shk { 25% { transform:translate(-8px,4px);} 50% { transform:translate(7px,-5px);} 75% { transform:translate(-5px,-4px);} }
+  .punch { font-size:52px; font-weight:900; color:#ffe600; text-shadow:0 0 24px rgba(255,230,0,.7), 3px 3px 0 #000;
+    transform:rotate(-2deg); }
+  .sub { font-size:28px; font-weight:700; color:#cfe9ff; }
+  .emj { font-size:120px; filter:drop-shadow(0 0 24px rgba(255,0,150,.6)); }
+
+  .card { display:flex; align-items:center; gap:36px; background:rgba(10,10,25,.8); border:3px solid #ff0096;
+    border-radius:28px; padding:34px 48px; box-shadow:0 0 45px rgba(255,0,150,.45), inset 0 0 30px rgba(255,0,150,.12); }
+  .face { width:190px; height:190px; border-radius:24px; object-fit:cover; border:4px solid #00e5ff;
+    box-shadow:0 0 30px rgba(0,229,255,.6); transform:rotate(-3deg); }
+  .cardinfo { text-align:left; display:flex; flex-direction:column; gap:10px; max-width:640px; }
+  .name { font-size:52px; font-weight:900; color:#ff5cb8; text-shadow:2px 2px 0 #000; }
+  .role { font-size:24px; font-weight:800; color:#00e5ff; letter-spacing:3px; }
+  .fact { font-size:26px; font-weight:600; color:#e6f4ff; }
+
+  .rain { position:fixed; inset:0; z-index:40; pointer-events:none; overflow:hidden; }
+  .drop { position:absolute; top:-70px; font-size:34px; font-weight:900; animation:fall linear forwards;
+    text-shadow:0 0 12px currentColor; }
+  @keyframes fall { to { transform:translateY(120vh) rotate(360deg); } }
+
+  .chart { width:760px; height:320px; position:relative; }
+  .chart svg { position:absolute; inset:0; overflow:visible; }
+  .cpath { fill:none; stroke:#ff2b2b; stroke-width:8; stroke-linecap:round; filter:drop-shadow(0 0 10px rgba(255,43,43,.8));
+    stroke-dasharray:2200; stroke-dashoffset:2200; }
+  .scene.on .cpath { animation:draw 3.4s ease-in forwards .3s; }
+  @keyframes draw { to { stroke-dashoffset:0; } }
+  .mmr { position:absolute; font-size:30px; font-weight:900; color:#9be8ff; }
+
+  .conf { position:fixed; inset:0; z-index:40; pointer-events:none; overflow:hidden; }
+  .cf { position:absolute; top:-60px; font-size:36px; animation:fall linear forwards; }
+
+  .logo-huge { font-size:64px; font-weight:900; }
+  .disc { background:linear-gradient(90deg,#5865f2,#8b5cf6); border-radius:18px; padding:16px 40px; font-size:32px;
+    font-weight:900; letter-spacing:1px; box-shadow:0 0 30px rgba(88,101,242,.7); transform:rotate(1.5deg); }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="topbar">
+  <div class="chip">🐆 ПАНТЕРА ТИМ</div>
+  <div class="chip cy">КИБЕР-ПРАЙД ТВ</div>
+  <div class="chip"><span class="live">● LIVE</span></div>
+</div>
+
+<div id="stage"></div>
+<div id="fx"></div>
+
+<div class="botbar">
+  <div class="tcode" id="tcode">00:00 / 00:45</div>
+  <div class="pbar"><i id="pfill"></i></div>
+</div>
+
+<div class="scan"></div>
+<div class="vig"></div>
+
+<script>
+const SCENES = [
+  // ===== 1. ИНТРО =====
+  { d: 4500, build(s) {
+    s.innerHTML = `
+      <div class="kicker pop">ПАНТЕРА ТИМ ПРЕДСТАВЛЯЕТ</div>
+      <div class="emj pop" style="animation-delay:.2s">🐆</div>
+      <div class="big grad pop" style="animation-delay:.35s">СМЕШНОЙ ВИДОС</div>
+      <div class="sub pop" style="animation-delay:.55s">про прайд, доту и полное отсутствие mmr</div>`;
+  }},
+
+  // ===== 2. ДАНЯ =====
+  { d: 7500, build(s) {
+    s.innerHTML = `
+      <div class="kicker pop">ГЕРОЙ #1 · МИДЕР ПРАЙДА</div>
+      <div class="card pop" style="animation-delay:.15s">
+        <img class="face" src="avatars/danya.jpg" alt="">
+        <div class="cardinfo">
+          <div class="name">ДАНЯ</div>
+          <div class="role">СОЛО МИД · 3000 ЧАСОВ В ФОНТАНЕ</div>
+          <div class="fact">«Я точно виню свою команду»</div>
+        </div>
+      </div>
+      <div class="punch pop" style="animation-delay:2.2s" id="danya-punch">ЕГО МИД — <span style="color:#ff2b2b">ФИД</span> 💀</div>`;
+    setTimeout(() => s.querySelector('#danya-punch').classList.add('shake'), 2300);
+    rain('−25 MMR', '#ff2b2b', 9, 2000);
+    rain('💀', '#fff', 8, 3500);
+  }},
+
+  // ===== 3. ВАЛЕРА =====
+  { d: 7000, build(s) {
+    s.innerHTML = `
+      <div class="kicker pop">ГЕРОЙ #2 · ИНВЕСТОР</div>
+      <div class="card pop" style="animation-delay:.15s">
+        <img class="face" src="avatars/valera.jpg" alt="">
+        <div class="cardinfo">
+          <div class="name">ВАЛЕРА</div>
+          <div class="role">КУПИЛ АРКАНУ ЗА 3000 ₽</div>
+          <div class="fact">«Скин — это половина победы»</div>
+        </div>
+      </div>
+      <div class="punch pop" style="animation-delay:2.2s">ПОБЕД С АРКАНОЙ: <span style="color:#ff2b2b">0 (НОЛЬ)</span></div>`;
+    rain('💸', '#ffe600', 14, 2200);
+    rain('📉', '#fff', 6, 3200);
+  }},
+
+  // ===== 4. МАКСОН =====
+  { d: 7000, build(s) {
+    s.innerHTML = `
+      <div class="kicker pop">ГЕРОЙ #3 · ЛЕГЕНДА ХУКА</div>
+      <div class="card pop" style="animation-delay:.15s">
+        <img class="face" src="avatars/maxon.jpg" alt="">
+        <div class="cardinfo">
+          <div class="name">МАКСОН</div>
+          <div class="role">ПАДЖ МЕЙН · 100% ПИК</div>
+          <div class="fact">«Один хук — и я легенда»</div>
+        </div>
+      </div>
+      <div class="punch pop" style="animation-delay:2s">
+        ХУКОВ В КРИПОВ: 147 🪝<br>
+        <span style="font-size:38px; color:#9be8ff">ХУКОВ ВО ВРАГОВ:</span> <span style="color:#ff2b2b">0</span>
+      </div>`;
+    rain('🪝', '#00e5ff', 10, 2500);
+  }},
+
+  // ===== 5. РИТА =====
+  { d: 7000, build(s) {
+    s.innerHTML = `
+      <div class="kicker pop">ГЕРОЙ #4 · САППОРТ МЕЧТЫ</div>
+      <div class="card pop" style="animation-delay:.15s">
+        <img class="face" src="avatars/rita.jpg" alt="">
+        <div class="cardinfo">
+          <div class="name">РИТА</div>
+          <div class="role">ПОЛНЫЙ САППОРТ · СЕРДЦЕ ПРАЙДА</div>
+          <div class="fact">«Я поставлю вард, вы только не кормите»</div>
+        </div>
+      </div>
+      <div class="punch pop" style="animation-delay:2.2s">ВАРДОВ ПОСТАВИЛА: 2 <span style="font-size:34px; color:#9be8ff">(ОБЕ В ФОНТАН)</span> 🌸</div>`;
+    rain('🌸', '#ff9ad5', 12, 2400);
+  }},
+
+  // ===== 6. ГРАФИК MMR =====
+  { d: 6000, build(s) {
+    s.innerHTML = `
+      <div class="kicker pop">ИТОГИ СЕЗОНА ПАНТЕРЫ ТИМ</div>
+      <div class="chart">
+        <svg viewBox="0 0 760 320">
+          <path class="cpath" d="M20,60 C150,80 220,40 320,110 C420,180 460,150 560,230 C640,290 690,300 740,310"/>
+        </svg>
+        <div class="mmr" style="left:14px; top:20px">MMR: 3500</div>
+        <div class="mmr" style="right:16px; bottom:-6px; color:#ff2b2b">MMR: 0 (бустед)</div>
+      </div>
+      <div class="punch pop" style="animation-delay:3.6s">ГГ. ЕЩЁ ОДНУ И СПАТЬ 😴</div>`;
+    rain('⬇️', '#ff2b2b', 6, 2600);
+  }},
+
+  // ===== 7. ФИНАЛ =====
+  { d: 5500, build(s) {
+    s.innerHTML = `
+      <div class="logo-huge grad pop">🐆 ПАНТЕРА ТИМ 🐆</div>
+      <div class="punch pop" style="animation-delay:.3s">БЕЗДАРИ, НО ЖЁСТКИЕ</div>
+      <div class="disc pop" style="animation-delay:.6s">ВСТУПАЙ В ПРАЙД: DISCORD.GG/RANMNXS6A</div>
+      <div class="sub pop" style="animation-delay:.9s"> Dota 2 · Standoff 2 · Chicken Gun · Minecraft</div>`;
+    rain('🐾', '#ff5cb8', 18, 3000);
+    rain('🏆', '#ffe600', 6, 3600);
+  }},
+];
+
+const stage = document.getElementById('stage');
+const fx = document.getElementById('fx');
+let delay = 0;
+const TOTAL = SCENES.reduce((a, s) => a + s.d, 0);
+const cur = [];
+
+function rain(text, color, count, dur) {
+  const box = document.createElement('div');
+  box.className = 'rain';
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement('div');
+    d.className = 'drop';
+    d.textContent = text;
+    d.style.color = color;
+    d.style.left = Math.random() * 96 + 'vw';
+    d.style.animationDuration = (dur / 1000) * (0.7 + Math.random() * 0.6) + 's';
+    d.style.animationDelay = Math.random() * (dur / 2200) + 's';
+    d.style.fontSize = 20 + Math.random() * 26 + 'px';
+    box.appendChild(d);
+  }
+  fx.appendChild(box);
+  setTimeout(() => box.remove(), dur + 3000);
+}
+
+function showScene(i) {
+  cur.forEach(n => n.remove());
+  cur.length = 0;
+  const scene = document.createElement('div');
+  scene.className = 'scene';
+  stage.appendChild(scene);
+  SCENES[i].build(scene);
+  requestAnimationFrame(() => requestAnimationFrame(() => scene.classList.add('on')));
+  cur.push(scene);
+}
+
+const t0 = performance.now();
+const tcode = document.getElementById('tcode');
+const pfill = document.getElementById('pfill');
+
+// все сцены и прогресс — по одним настенным часам, чтобы таймлайн не плыл при просадках fps
+let sceneIdx = -1;
+(function tick() {
+  const el = performance.now() - t0;
+  let idx = 0, acc = 0;
+  for (let k = 0; k < SCENES.length; k++) {
+    if (el < acc) break;
+    idx = k;
+    acc += SCENES[k].d;
+  }
+  if (idx !== sceneIdx) { sceneIdx = idx; showScene(idx); }
+
+  const s = Math.min(el, TOTAL);
+  const sec = Math.floor(s / 1000), tot = Math.floor(TOTAL / 1000);
+  tcode.textContent = '00:' + String(sec).padStart(2,'0') + ' / 00:' + String(tot % 60).padStart(2,'0');
+  pfill.style.width = Math.min(100, s / TOTAL * 100).toFixed(2) + '%';
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
