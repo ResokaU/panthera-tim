@@ -672,6 +672,11 @@
   renderGb();
 
   // ===== АПИШКИ ПРАЙДА =====
+  function fetchT(url, ms) {
+  const c = new AbortController();
+  const t = setTimeout(() => c.abort(), ms || 8000);
+  return fetch(url, { signal: c.signal }).finally(() => clearTimeout(t));
+}
   function apiLoading(box, txt) { box.innerHTML = '<span class="api-load">' + txt + '</span>'; }
   function apiFail(box, msg) { box.innerHTML = '<span class="api-err">' + msg + '</span>'; }
 
@@ -702,7 +707,7 @@
   };
   function loadWeather() {
     apiLoading(weatherBox, 'смотрим в окно…');
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=55.75&longitude=37.62&current=temperature_2m,weather_code')
+    fetchT('', 7000)
       .then(r => r.json())
       .then(d => {
         const c = d.current;
@@ -712,7 +717,7 @@
           '<div class="api-big">' + Math.round(c.temperature_2m) + '°C</div>' +
           '<div class="api-note">' + txt + ' · вывод: идеальная погода для доты</div></div>';
       })
-      .catch(() => apiFail(weatherBox, 'погода ушла в папку. тоже фидит'));
+      .catch(() => apiFail(weatherBox, 'погода не отвечает. значит, идёт снег из фидов 🌧'));
   }
   document.getElementById('weatherBtn').addEventListener('click', () => { popSound(); loadWeather(); });
   loadWeather();
@@ -721,7 +726,7 @@
   const feedBox = document.getElementById('feedBox');
   function loadFeed() {
     apiLoading(feedBox, 'звоним максиму…');
-    fetch('https://open.er-api.com/v6/latest/USD')
+    fetchT('', 8000)
       .then(r => r.json())
       .then(d => {
         const rub = d.rates.RUB;
@@ -739,7 +744,7 @@
   const dogBox = document.getElementById('dogBox');
   function loadDog() {
     apiLoading(dogBox, 'будим стажёра…');
-    fetch('https://dog.ceo/api/breeds/image/random')
+    fetchT('', 8000)
       .then(r => r.json())
       .then(d => {
         dogBox.innerHTML = '';
