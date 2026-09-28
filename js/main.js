@@ -760,7 +760,7 @@
     if (g3dLoaded) return;
     g3dLoaded = true;
     const t1 = document.createElement('script');
-    t1.src = 'https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js';
+    t1.src = 'js/three.min.js';
     t1.onload = () => {
       const t2 = document.createElement('script');
       t2.src = 'js/game3d.js';
