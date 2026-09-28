@@ -532,6 +532,8 @@
   .paws span{display:inline-block}
   .paws span:nth-child(even){transform:translateY(7px)}
   .credits{margin-top:.7rem;font-size:.78rem;opacity:.6}
+  .fact-line{margin-top:.9rem;font-size:.88rem;color:#c9c4ef}
+  .fact-line span{transition:opacity .4s}
 
   /* ---------- эмодзи-взрывы ---------- */
   .boom{
@@ -663,6 +665,51 @@
   .to-top.show{opacity:1;pointer-events:auto;transform:none}
   .to-top:hover{box-shadow:0 0 22px rgba(168,85,247,.5);transform:translateY(-3px)}
 
+  /* ---------- оракул ---------- */
+  .oracle-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:1.4rem;max-width:780px;margin:0 auto;
+  }
+  .oracle-card{
+    --c:var(--purple);
+    position:relative;text-align:center;cursor:default;
+    background:linear-gradient(180deg, rgba(21,16,48,.72), rgba(10,8,26,.72));
+    border:1px solid color-mix(in srgb, var(--c) 35%, transparent);
+    border-radius:24px;padding:2.2rem 1.8rem 2rem;
+  }
+  .oc-ava{
+    width:76px;height:76px;margin:0 auto 1.1rem;border-radius:50%;overflow:hidden;
+    border:2px solid var(--c);box-shadow:0 0 26px color-mix(in srgb, var(--c) 45%, transparent);
+    display:grid;place-items:center;
+  }
+  .oc-ava img{width:100%;height:100%;object-fit:cover}
+  .oc-dice{font-size:2.2rem;filter:drop-shadow(0 0 12px var(--c))}
+  .oracle-card h3{font-family:'Unbounded',sans-serif;font-size:1.15rem;font-weight:800;margin-bottom:.4rem}
+  .oc-q{color:var(--muted);font-size:.85rem}
+  .oc-ans{
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:1.05rem;
+    color:var(--c);min-height:2.4em;margin:.9rem 0 1.2rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ---------- курица-кликер ---------- */
+  .chicken-camp{margin:3.5rem auto 0;text-align:center}
+  .chicken-btn{
+    display:block;width:160px;height:160px;border-radius:50%;overflow:hidden;
+    margin:0 auto 1.4rem;padding:0;border:3px solid #facc15;cursor:pointer;
+    background:none;box-shadow:0 0 34px rgba(250,204,21,.35), 0 10px 30px rgba(0,0,0,.5);
+    transition:transform .09s, box-shadow .3s;position:relative;
+  }
+  .chicken-btn:hover{box-shadow:0 0 50px rgba(250,204,21,.55)}
+  .chicken-btn:active{transform:scale(.9)}
+  .chicken-btn img{width:100%;height:100%;object-fit:cover;display:block}
+  .chicken-btn.scared{animation:scared .35s ease}
+  @keyframes scared{
+    0%,100%{transform:rotate(0)}
+    25%{transform:rotate(-9deg) scale(1.06)}
+    75%{transform:rotate(9deg) scale(1.06)}
+  }
+
   /* ---------- появление при скролле ---------- */
   .reveal{
     opacity:0;transform:translateY(30px);
@@ -731,7 +778,7 @@
       <div><b>04</b><span>пантеры в прайде</span></div>
       <div><b>2300+</b><span>часов в Dota</span></div>
       <div><b>100%</b><span>кринжа</span></div>
-      <div><b>∞</b><span>драйва</span></div>
+      <div><b>0</b><span>фидов у Дани</span></div>
     </div>
   </div>
 
@@ -837,8 +884,8 @@
 <!-- ================= БЕГУЩАЯ СТРОКА ================= -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ROBLOX&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ ФИДИТ — ПРАЙД ВИНРИТ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;AMONG US&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;ФИДЫ ДАНИ: ∞&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
-    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ROBLOX&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ ФИДИТ — ПРАЙД ВИНРИТ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;AMONG US&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;ФИДЫ ДАНИ: ∞&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ROBLOX&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ НЕ ФИДИТ — ФИДИТ МАКСИМ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;AMONG US&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;ФИДЫ МАКСИМА: ∞&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ROBLOX&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ НЕ ФИДИТ — ФИДИТ МАКСИМ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;AMONG US&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;ФИДЫ МАКСИМА: ∞&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
   </div>
 </div>
 
@@ -852,29 +899,29 @@
 
     <div class="team-grid">
       <article class="card reveal" style="--c:#a855f7;--d:.0s">
-        <div class="ribbon">ГЛАВНЫЙ ФИДЕР</div>
+        <div class="ribbon">ПОЧТИ ПРО</div>
         <div class="avatar"><img src="avatars/danya.jpg" alt="Даня"><span>👑</span></div>
         <h3>ДАНЯ</h3>
         <div class="role">Глава прайда</div>
-        <p>1700 часов в Dota. Варды не ставит принципиально — говорит, это для слабых. Легенда лобби.</p>
+        <p>1700 часов в Dota и <b>меньше всех фидит</b> — официальная статистика прайда. Варды не ставит принципиально: говорит, это для слабых.</p>
         <div class="hours">🔥 1700 ч в Dota</div>
       </article>
 
       <article class="card reveal" style="--c:#22d3ee;--d:.08s">
-        <div class="ribbon">МОЗГ ПРАЙДА</div>
+        <div class="ribbon">УВЕРЕННОСТЬ 100%</div>
         <div class="avatar"><img src="avatars/valera.jpg" alt="Валера"><span>⚡</span></div>
         <h3>ВАЛЕРА</h3>
         <div class="role">Правая лапа</div>
-        <p>400 часов и единственный, кто читает патчноуты. Ходячая википедия. Опасен на миде.</p>
+        <p>400 часов и большая уверенность в себе. Не очень умный — зато громкий. Самый громкий во всём прайде.</p>
         <div class="hours">🔥 400 ч в Dota</div>
       </article>
 
       <article class="card reveal" style="--c:#fb923c;--d:.16s">
-        <div class="ribbon">РАШ Б</div>
+        <div class="ribbon">ГЛАВНЫЙ ФИДЕР</div>
         <div class="avatar"><img src="avatars/maxon.jpg" alt="Максим"><span>🔥</span></div>
         <h3>МАКСИМ</h3>
         <div class="role">Коготь</div>
-        <p>200 часов, 200 смертей. Идеальный баланс, как в патче 7.00. Первый в драке, всегда.</p>
+        <p>200 часов, 200 смертей. Официальный главный фидер прайда. Идеальный баланс, как в патче 7.00.</p>
         <div class="hours">🔥 200 ч в Dota</div>
       </article>
 
@@ -984,6 +1031,14 @@
         <a class="wiki" href="https://ru.wikipedia.org/wiki/Geometry_Dash" target="_blank" rel="noopener">📖 вики</a>
       </article>
     </div>
+
+    <div class="chicken-camp reveal" id="chickenCamp">
+      <button class="chicken-btn" id="chickenBtn" aria-label="Напугать курицу">
+        <img src="images/chicken.jpg" alt="Курица">
+      </button>
+      <div class="fc-num" id="chNum">0</div>
+      <div class="fc-label">курицы напугано · клик = 1 🐔</div>
+    </div>
   </div>
 </section>
 
@@ -992,18 +1047,18 @@
   <span class="sticker" style="top:10%;left:4%;font-size:2.4rem;animation-delay:.4s" aria-hidden="true">💀</span>
   <span class="sticker" style="bottom:8%;right:3%;font-size:2.6rem;animation-delay:1.4s" aria-hidden="true">🔥</span>
   <div class="section-inner">
-    <div class="kicker reveal">/// покровитель фидеров</div>
+    <div class="kicker reveal">/// тот, кто не фидит</div>
     <h2 class="reveal" style="--d:.05s">МЕМЫ ПРО ДАНЮ<br><span class="grad-text">(ОН ЗНАЕТ)</span></h2>
 
     <div class="gal-grid">
       <figure class="gal reveal" style="--d:.0s">
         <img src="images/facepalm.jpg" alt="Статуя фейспалма" loading="lazy">
-        <figcaption>ДАНЯ СМОТРИТ РЕПЛЕЙ СВОЕЙ КАТКИ 🤦</figcaption>
+        <figcaption>ДАНЯ СМОТРИТ РЕПЛЕЙ ВАШИХ КАТОК 🤦</figcaption>
       </figure>
 
       <figure class="gal reveal" style="--d:.07s">
         <img class="pad" src="images/trophy.png" alt="Золотой трофей" loading="lazy">
-        <figcaption>ТРОФЕЙ ДАНИ: ЛУЧШИЙ ФИДЕР СЕЗОНА 🏆</figcaption>
+        <figcaption>ТРОФЕЙ ДАНИ: 1 ФИД ЗА СЕЗОН 🏆</figcaption>
       </figure>
 
       <figure class="gal reveal" style="--d:.14s">
@@ -1038,12 +1093,12 @@
 
       <figure class="gal reveal" style="--d:.56s">
         <img src="images/pigeon.jpg" alt="Городской голубь" loading="lazy">
-        <figcaption>КУРЬЕР ДАНИ ПРИВЁЗ ФИД 🕊️</figcaption>
+        <figcaption>КУРЬЕР ВАЛЕРЫ ПРИВЁЗ ФИД 🕊️</figcaption>
       </figure>
 
       <figure class="gal reveal" style="--d:.63s">
         <img src="images/hamster.jpg" alt="Хомяк" loading="lazy">
-        <figcaption>ХОМЯК ФАРМИТ ЛЕС. ДАНЯ НЕ УСПЕЛ 🐹</figcaption>
+        <figcaption>ХОМЯК ФАРМИТ ЛЕС БЫСТРЕЕ ВАЛЕРЫ 🐹</figcaption>
       </figure>
 
       <figure class="gal reveal" style="--d:.7s">
@@ -1053,8 +1108,8 @@
     </div>
 
     <div class="feed-counter reveal" id="feedCounter" role="button" title="Клик!">
-      <div class="fc-num" id="fcNum">1 700 000</div>
-      <div class="fc-label">фидов Дани за сезон · клик = +1 🔥</div>
+      <div class="fc-num" id="fcNum">200 000</div>
+      <div class="fc-label">фидов МАКСИМА за сезон · клик = +1 🔥</div>
     </div>
   </div>
 </section>
@@ -1072,14 +1127,14 @@
         <img src="avatars/danya.jpg" alt="" loading="lazy">
         <div>
           <div class="mh"><b style="color:#a855f7">ДАНЯ</b><span class="time">сегодня в 03:14</span></div>
-          <p>я не фидер, я тактический отвлекающий манёвр</p>
+          <p>я не говорю, что вы фидите. я просто имею статистику</p>
         </div>
       </div>
       <div class="msg">
         <img src="avatars/valera.jpg" alt="" loading="lazy">
         <div>
           <div class="mh"><b style="color:#22d3ee">ВАЛЕРА</b><span class="time">сегодня в 03:15</span></div>
-          <p>я читал патчноут. там написано: молитесь</p>
+          <p>я умный. спрашивайте что угодно (кроме математики)</p>
         </div>
       </div>
       <div class="msg">
@@ -1093,7 +1148,7 @@
         <span class="bot-ava">🐾</span>
         <div>
           <div class="mh"><b style="color:#4ade80">ПРАЙД-БОТ</b><span class="time">сегодня в 03:16</span></div>
-          <p>⚠️ Даня автоматически получил звание «главный фидер» · ранг: смело</p>
+          <p>⚠️ Максим автоматически получил звание «главный фидер» · ранг: смело</p>
         </div>
       </div>
       <div class="msg">
@@ -1104,6 +1159,32 @@
         </div>
       </div>
       <div class="chat-foot">даня печатает… уже 4 часа</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ОРАКУЛ ================= -->
+<section id="oracle">
+  <span class="sticker" style="top:14%;right:5%;font-size:2.6rem;animation-delay:.3s" aria-hidden="true">🔮</span>
+  <div class="section-inner">
+    <div class="kicker reveal">/// оракул прайда</div>
+    <h2 class="reveal" style="--d:.05s">СПРОСИ<br><span class="grad-text">ОРАКУЛА</span></h2>
+
+    <div class="oracle-grid">
+      <div class="oracle-card reveal" style="--c:#a855f7;--d:.1s">
+        <div class="oc-ava"><img src="avatars/danya.jpg" alt="Даня"></div>
+        <h3>ДАНЯ-8 БИЛЛ</h3>
+        <p class="oc-q">задай вопрос (мысленно) и жми</p>
+        <div class="oc-ans" id="danyaAns">………</div>
+        <button class="btn btn-primary btn-small" id="askDanya">СПРОСИТЬ ДАНЮ</button>
+      </div>
+      <div class="oracle-card reveal" style="--c:#facc15;--d:.18s">
+        <div class="oc-ava"><span class="oc-dice">🎲</span></div>
+        <h3>ИГРА ВЕЧЕРА</h3>
+        <p class="oc-q">оракул решает, куда пойдёт прайд</p>
+        <div class="oc-ans" id="gameAns">………</div>
+        <button class="btn btn-primary btn-small" id="askGame">КРУТИТЬ</button>
+      </div>
     </div>
   </div>
 </section>
@@ -1126,7 +1207,7 @@
       </div>
       <div class="tl-item" style="--c:#22d3ee">
         <div class="tl-year">2026 · сентябрь</div>
-        <p><b>К прайду присоединился Валера</b> — с планом и патчноутами. План сгорел, разум остался.</p>
+        <p><b>К прайду присоединился Валера</b> — с уверенностью и громкостью. План был. Куда-то делся.</p>
       </div>
       <div class="tl-item" style="--c:#fb923c">
         <div class="tl-year">2026 · сентябрь</div>
@@ -1224,6 +1305,10 @@
         <summary>Кто в прайде главный?</summary>
         <p>Даня. По крайней мере, он так думает. Мы не спорим — так проще.</p>
       </details>
+      <details class="reveal" style="--d:.1s">
+        <summary>Валера умный?</summary>
+        <p>Он так думает. И это главное. Мы не спорим — страшно.</p>
+      </details>
       <details class="reveal" style="--d:.14s">
         <summary>Можно вступить без скилла?</summary>
         <p>Скилл у нас тоже нет. Залетай — научим фидить красиво и с музыкой.</p>
@@ -1257,6 +1342,7 @@
 <footer>
   <div class="paws" aria-hidden="true"><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span></div>
   <div>ПАНТЕРА ТИМ © 2026 · прайд бьёт первым 🖤</div>
+  <div class="fact-line">💡 <span id="factText"></span></div>
   <div class="credits">фотки: Wikimedia Commons · логотипы принадлежат их владельцам · Даня одобрил (нет)</div>
 </footer>
 
@@ -1410,10 +1496,10 @@
     if (document.body.classList.contains('cringe')) spawnEmoji(e.clientX, e.clientY, ['🔥','🐾','💥'], 6);
   });
 
-  // счётчик фидов Дани
+  // счётчик фидов Максима
   const fc = document.getElementById('feedCounter');
   const fcNum = document.getElementById('fcNum');
-  let feeds = 1700000;
+  let feeds = 200000;
   fc.addEventListener('click', e => {
     feeds++;
     fcNum.textContent = feeds.toLocaleString('ru-RU');
@@ -1445,9 +1531,9 @@
 
   // клик по пантерам состава → фразы + поп
   const cardPhrases = [
-    ['АНКА! 🐆','ещё 1700 часов!','варды — для слабых','я не фидер, я разведка'],
-    ['по плану, братья ⚡','я читал патчноут','тики-таки, всё под контролем'],
-    ['РАШ Б! 🔥','я в драке, чё','нужен киллка','смерть — это статистика'],
+    ['АНКА! 🐆','меньше всех фидит — это я','варды — для слабых','смотрите мини-карту, ораторы'],
+    ['я умный, спрашивайте ⚡','громкость 100%','какой план? мы идём бить'],
+    ['РАШ Б! 🔥','главный фидер на связи','я в драке, чё','смерть — это статистика'],
     ['мяу! 💖','я в деле!','винрейт 100%','н trained by cats'],
   ];
   document.querySelectorAll('.team-grid .card').forEach((card, i) => {
@@ -1506,6 +1592,96 @@
   // заголовок вкладки, когда ушёл из прайда
   document.addEventListener('visibilitychange', () => {
     document.title = document.hidden ? '🐱 вернись в прайд!' : 'ПАНТЕРА ТИМ — кибер-прайд';
+  });
+
+  // ОРАКУЛ: Даня-8 билл
+  const danyaAns = [
+    'да','нет','ещё катка','это мета','я в деле',
+    'спроси Валеру — он не знает','после пиццы — обсудим',
+    'сначала варды… шутка','респавн через 30 сек, подожди',
+    'победа близко (нет)','максим, слезь с миникарты','мяу. то есть да',
+  ];
+  const danyaAnsEl = document.getElementById('danyaAns');
+  document.getElementById('askDanya').addEventListener('click', e => {
+    popSound();
+    let i = 0;
+    const iv = setInterval(() => {
+      danyaAnsEl.textContent = danyaAns[i % danyaAns.length];
+      i++;
+    }, 80);
+    setTimeout(() => {
+      clearInterval(iv);
+      danyaAnsEl.textContent = danyaAns[Math.floor(Math.random() * danyaAns.length)];
+      airhorn();
+      spawnEmoji(e.clientX, e.clientY, ['🔮','👑','✨'], 8);
+    }, 80 * 10);
+  });
+
+  // ОРАКУЛ: игра вечера
+  const gamesList = [
+    'DOTA 2 ⚔️','STANDOFF 2 🔫','CHICKEN GUN 🐔','MINECRAFT ⛏️',
+    'ROBLOX 🧱','AMONG US 🔪','BRAWL STARS ⭐','GEOMETRY DASH 🔺',
+  ];
+  const gameAnsEl = document.getElementById('gameAns');
+  document.getElementById('askGame').addEventListener('click', e => {
+    popSound();
+    let i = 0;
+    const iv = setInterval(() => {
+      gameAnsEl.textContent = gamesList[i % gamesList.length];
+      i++;
+    }, 80);
+    setTimeout(() => {
+      clearInterval(iv);
+      gameAnsEl.textContent = gamesList[Math.floor(Math.random() * gamesList.length)];
+      airhorn();
+      spawnEmoji(e.clientX, e.clientY, ['🎮','🔥','✨'], 8);
+    }, 80 * 12);
+  });
+
+  // КУРИЦА-КЛИКЕР
+  const chickenBtn = document.getElementById('chickenBtn');
+  const chNum = document.getElementById('chNum');
+  let scared = 0;
+  chickenBtn.addEventListener('click', e => {
+    scared++;
+    chNum.textContent = scared.toLocaleString('ru-RU');
+    chickenBtn.classList.remove('scared');
+    void chickenBtn.offsetWidth;
+    chickenBtn.classList.add('scared');
+    popSound();
+    if (scared % 25 === 0) {
+      airhorn();
+      spawnEmoji(e.clientX, e.clientY, ['🐔','💥','😱','🪶'], 12);
+    } else if (document.body.classList.contains('cringe')) {
+      spawnEmoji(e.clientX, e.clientY, ['🐔','🪶'], 4);
+    }
+  });
+
+  // факты в футере
+  const facts = [
+    'Рита не проиграла ни одной катки. Официально. (Каток было: 0)',
+    'Даня фидит реже всех. Это не ошибка. Это статистика.',
+    'Валера думает, что он умный. Мы не спорим — так тише.',
+    'Фиды Максима растут быстрее инфляции.',
+    'Курица из Chicken Gun до сих пор в шоке.',
+    'КРИНЖ-МЕТР показывает правду. Всегда.',
+    'Пантера видит тебя. Прямо сейчас.',
+  ];
+  const factText = document.getElementById('factText');
+  let factI = 0;
+  factText.textContent = facts[0];
+  setInterval(() => {
+    factText.style.opacity = 0;
+    setTimeout(() => {
+      factI = (factI + 1) % facts.length;
+      factText.textContent = facts[factI];
+      factText.style.opacity = 1;
+    }, 400);
+  }, 6000);
+
+  // звук при открытии FAQ
+  document.querySelectorAll('.faq-list details').forEach(d => {
+    d.addEventListener('toggle', () => { if (d.open) popSound(); });
   });
 </script>
 </body>
