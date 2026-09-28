@@ -36,7 +36,7 @@
     <a class="nav-page" href="#games">Игры</a>
     <a class="nav-page" href="#memes">Мемы</a>
     <a class="nav-page" href="#chat">Чат</a>
-    <span class="ach-badge" id="achBadge">🏅 0/17</span>
+    <span class="ach-badge" id="achBadge">🏅 0/19</span>
     <a class="nav-page" href="#discord">Discord</a>
     <button class="btn-cringe" id="cringeBtn" aria-pressed="false">🌈 КРИНЖ-РЕЖИМ</button>
     <a class="btn btn-primary btn-small" href="https://discord.gg/ranMNxS6A" target="_blank" rel="noopener">Вступить</a>
@@ -744,6 +744,7 @@
       <button class="btn btn-ghost" id="shuffleBurmala">🌀 ПЕРЕМЕШАТЬ БУРМАЛДУ</button>
       <button class="btn btn-primary" id="nothingBtn">КНОПКА НИЧЕГО</button>
       <button class="btn btn-ghost" id="ugarBtn">🤸 УГАР НА 5 СЕК</button>
+      <button class="btn btn-ghost" id="breakBtn">💀 СЛОМАТЬ САЙТ</button>
     </div>
     <div class="nothing-note" id="nothingNote"></div>
   </div>
@@ -814,6 +815,20 @@
   </div>
 </section>
 
+<!-- ================= ТЕСТ ================= -->
+<section id="test">
+  <span class="sticker" style="top:14%;right:4%;font-size:2.3rem;animation-delay:.8s" aria-hidden="true">🧪</span>
+  <div class="section-inner">
+    <div class="kicker reveal">/// очень серьёзный тест</div>
+    <h2 class="reveal" style="--d:.05s">КАКОЙ ТЫ<br><span class="grad-text">ФИДЕР?</span></h2>
+    <div class="quiz reveal" style="--d:.1s" id="quiz">
+      <div class="q-num" id="qNum">Вопрос 1/3</div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-answers" id="qAnswers"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= DISCORD ================= -->
 <section id="discord">
   <div class="cta-panel reveal">
@@ -832,6 +847,7 @@
   <div class="paws" aria-hidden="true"><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span></div>
   <div>ПАНТЕРА ТИМ © 2026 · прайд бьёт первым 🖤</div>
   <div class="fact-line">💡 <span id="factText"></span></div>
+  <div class="site-time" id="siteTime"></div>
   <div class="credits">фотки: Wikimedia Commons · логотипы принадлежат их владельцам · Даня одобрил (нет)</div>
 </footer>
 
@@ -841,7 +857,14 @@
 <canvas id="viz"></canvas>
 <div id="achToasts"></div>
 
+<div class="fake-ad hidden" id="fakeAd">
+  <div class="fa-head">🔥 РЕКЛАМА 🔥</div>
+  <p>СКАЧАЙ БОЛЬШЕ ФИДОВ ПРЯМО СЕЙЧАС. БЕСПЛАТНО*</p>
+  <small>*не бесплатно</small>
+  <button class="fa-close" id="faClose">✖</button>
+</div>
+
 <script src="js/audio.js?v=6" defer></script>
-<script src="js/main.js?v=6" defer></script>
+<script src="js/main.js?v=7" defer></script>
 </body>
 </html>

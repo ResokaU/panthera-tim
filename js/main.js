@@ -553,6 +553,8 @@
     react_played: 'Нейронка работает ⚡',
     p3d_played: 'В 3D-измерении 🕹',
     p3d_pro: '3D-профи: 10+ очков 🕹',
+    site_break: 'Вандализм 💀',
+    ad_hater: 'Враг рекламы 🚫',
   };
   function renderAchCount() {
     const seen = JSON.parse(localStorage.getItem('panthera_ach') || '[]');
@@ -780,3 +782,148 @@
     }, { rootMargin: '500px' });
     io3d.observe(g3dSec);
   }
+
+  // ===== СЛУЧАЙНЫЕ СОБЫТИЯ (херня каждые 42 секунды) =====
+  function flyPanther() {
+    const s = document.createElement('span');
+    s.textContent = '🐆';
+    s.style.cssText = 'position:fixed;top:' + (20 + Math.random() * 60) + 'vh;left:-60px;font-size:2.2rem;z-index:98;pointer-events:none;transition:transform 2.2s linear';
+    document.body.appendChild(s);
+    requestAnimationFrame(() => { s.style.transform = 'translateX(' + (innerWidth + 130) + 'px) rotate(720deg)'; });
+    setTimeout(() => s.remove(), 2400);
+  }
+  function hueFlash() {
+    const d = document.createElement('div');
+    d.style.cssText = 'position:fixed;inset:0;z-index:110;pointer-events:none;background:linear-gradient(45deg,rgba(255,0,150,.16),rgba(0,255,220,.16));mix-blend-mode:screen;transition:opacity .8s';
+    document.body.appendChild(d);
+    setTimeout(() => { d.style.opacity = 0; setTimeout(() => d.remove(), 800); }, 900);
+  }
+  function emojiRainEvent() {
+    const ch = ['🐾', '🍕', '⭐', '💀', '🐔', '💖'];
+    for (let i = 0; i < 14; i++) {
+      const s = document.createElement('span');
+      s.className = 'panther-rain';
+      s.textContent = ch[i % ch.length];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.fontSize = (Math.random() * 20 + 14) + 'px';
+      s.style.animationDuration = (Math.random() * 1.5 + 1.8) + 's';
+      s.style.animationDelay = (Math.random() * 1.2) + 's';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 5000);
+    }
+  }
+  const chaos = [flyPanther, hueFlash, emojiRainEvent];
+  function randomChaos() { if (!document.hidden) chaos[Math.floor(Math.random() * chaos.length)](); }
+  setInterval(() => { if (!document.hidden) randomChaos(); }, 42000);
+  setTimeout(randomChaos, 15000);
+
+  // ===== СКОЛЬКО ТЫ В ПРАЙДЕ =====
+  const siteTime = document.getElementById('siteTime');
+  const siteT0 = Date.now();
+  setInterval(() => {
+    const s = Math.floor((Date.now() - siteT0) / 1000);
+    siteTime.textContent = '⏱ ты в прайде уже: ' + Math.floor(s / 60) + ' мин ' + (s % 60) + ' сек';
+  }, 1000);
+
+  // ===== СЛОМАТЬ САЙТ =====
+  const breakBtn = document.getElementById('breakBtn');
+  let brokenOn = false;
+  breakBtn.addEventListener('click', () => {
+    if (brokenOn) return;
+    brokenOn = true;
+    airhorn();
+    unlock('site_break');
+    document.body.classList.add('broken');
+    setTimeout(() => {
+      document.body.classList.remove('broken');
+      brokenOn = false;
+    }, 2600);
+  });
+
+  // ===== УБЕГАЮЩАЯ РЕКЛАМА =====
+  const fakeAd = document.getElementById('fakeAd');
+  const faClose = document.getElementById('faClose');
+  let faTries = 0;
+  setTimeout(() => {
+    if (!fakeAd) return;
+    fakeAd.classList.remove('hidden');
+    popSound();
+  }, 9000);
+  faClose.addEventListener('mouseenter', () => {
+    faTries++;
+    if (faTries < 4) {
+      faClose.style.left = (10 + Math.random() * 70) + '%';
+      faClose.style.top = (10 + Math.random() * 70) + '%';
+      if (faTries === 2) fakeAd.querySelector('p').textContent = 'не получится 😈';
+      if (faTries === 3) fakeAd.querySelector('p').textContent = 'крестик убегает. как и твои победы';
+    } else {
+      faClose.style.left = '50%';
+      faClose.style.top = '40%';
+    }
+  });
+  faClose.addEventListener('click', e => {
+    e.stopPropagation();
+    fakeAd.querySelector('p').textContent = 'ладно-ладно, ухожу 😔';
+    setTimeout(() => fakeAd.classList.add('hidden'), 700);
+    popSound();
+    unlock('ad_hater');
+  });
+
+  // ===== ТЕСТ «КАКОЙ ТЫ ФИДЕР?» =====
+  const quizData = [
+    {
+      q: 'Тебя зовут в катку в 3 часа ночи. Ты:',
+      a: [['уже в игре', 0], ['а что такое «катка»?', 3], ['только если после пиццы', 2]],
+    },
+    {
+      q: 'Твоя суперсила в команде:',
+      a: [['принимать решения за всех', 0], ['быть громким и заметным', 1], ['видеть то, что не видят другие', 3]],
+    },
+    {
+      q: 'Честно: ты фидишь?',
+      a: [['никогда. я — Даня', 0], ['иногда… окей, часто', 2], ['я не знаю, что такое фид', 3], ['я планирование, а не фид', 1]],
+    },
+  ];
+  const quizResults = [
+    ['ДАНЯ 👑', 'Ты — глава прайда. Решения принимаешь ты, варды не ставишь ты, и это работает.'],
+    ['ВАЛЕРА ⚡', 'Ты — громкость и уверенность. Умный? Неважно. Зато план был. Куда-то делся, но был.'],
+    ['МАКСИМ 🔥', 'Ты — главный фидер и ударная сила одновременно. Идеальный баланс, как в патче 7.00.'],
+    ['РИТА 🌙', 'Ты — глаза в ночи. 20 минут опыта, 100% винрейта. Несправедливо? Да. Так рождаются легенды.'],
+  ];
+  const qNumEl = document.getElementById('qNum');
+  const qTextEl = document.getElementById('qText');
+  const qAnswersEl = document.getElementById('qAnswers');
+  let quizI = 0, quizPts = [0, 0, 0, 0];
+  function renderQuiz() {
+    const d = quizData[quizI];
+    qNumEl.textContent = 'Вопрос ' + (quizI + 1) + '/' + quizData.length;
+    qTextEl.textContent = d.q;
+    qAnswersEl.innerHTML = '';
+    d.a.forEach(([txt, who]) => {
+      const b = document.createElement('button');
+      b.className = 'q-ans';
+      b.textContent = txt;
+      b.addEventListener('click', () => {
+        quizPts[who]++;
+        popSound();
+        quizI++;
+        quizI < quizData.length ? renderQuiz() : showQuizResult();
+      });
+      qAnswersEl.appendChild(b);
+    });
+  }
+  function showQuizResult() {
+    const win = quizPts.indexOf(Math.max(...quizPts));
+    qNumEl.textContent = 'РЕЗУЛЬТАТ';
+    qTextEl.textContent = '';
+    qAnswersEl.innerHTML =
+      '<div class="q-result-emoji">' + ['👑', '⚡', '🔥', '🌙'][win] + '</div>' +
+      '<div class="q-result-title">ТЫ — ' + quizResults[win][0] + '</div>' +
+      '<div class="q-result-desc">' + quizResults[win][1] + '</div>';
+    const again = document.createElement('button');
+    again.className = 'btn btn-ghost btn-small';
+    again.textContent = '🔁 ПРОЙТИ ЕЩЁ РАЗ';
+    again.addEventListener('click', () => { quizI = 0; quizPts = [0, 0, 0, 0]; renderQuiz(); });
+    qAnswersEl.appendChild(again);
+  }
+  renderQuiz();
