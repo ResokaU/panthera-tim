@@ -445,6 +445,47 @@
     text-shadow:0 2px 0 rgba(0,0,0,.85);
   }
 
+  /* ---------- чат прайда ---------- */
+  .chat{
+    max-width:760px;margin:0 auto;overflow:hidden;
+    background:#0b0a1d;border:1px solid rgba(255,255,255,.07);border-radius:16px;
+    box-shadow:0 20px 60px -20px rgba(124,58,237,.35);
+  }
+  .chat-head{
+    padding:.85rem 1.2rem;background:#161233;
+    font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.06em;
+    color:#c9c4ef;border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .msg{display:flex;gap:.9rem;padding:.95rem 1.2rem;border-top:1px solid rgba(255,255,255,.04)}
+  .msg img,.bot-ava{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0}
+  .bot-ava{display:grid;place-items:center;font-size:1.1rem;background:#12102c;border:1px solid rgba(74,222,128,.4)}
+  .mh b{font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.04em}
+  .time{color:#6b679a;font-size:.72rem;margin-left:.5rem}
+  .msg p{color:#c9c4ef;font-size:.95rem;margin-top:.2rem;line-height:1.5}
+  .chat-foot{
+    padding:.85rem 1.2rem;color:#6b679a;font-size:.82rem;font-style:italic;
+    border-top:1px solid rgba(255,255,255,.04);
+  }
+
+  /* ---------- счётчик фидов ---------- */
+  .feed-counter{
+    max-width:560px;margin:3rem auto 0;text-align:center;cursor:pointer;
+    border:2px dashed rgba(255,45,85,.5);border-radius:20px;
+    background:rgba(255,45,85,.05);padding:2rem 1.5rem 1.7rem;
+    transition:transform .25s, box-shadow .25s;user-select:none;
+  }
+  .feed-counter:hover{transform:scale(1.03);box-shadow:0 0 40px rgba(255,45,85,.25)}
+  .fc-num{
+    font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,3.2rem);
+    background:linear-gradient(90deg,var(--purple),var(--red));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    line-height:1.1;
+  }
+  .fc-label{
+    font-family:'Unbounded',sans-serif;font-size:.66rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.7rem;
+  }
+
   /* ---------- discord cta ---------- */
   .cta-panel{
     position:relative;overflow:hidden;text-align:center;
@@ -564,6 +605,7 @@
     <a class="nav-page" href="#team">Состав</a>
     <a class="nav-page" href="#games">Игры</a>
     <a class="nav-page" href="#memes">Мемы</a>
+    <a class="nav-page" href="#chat">Чат</a>
     <a class="nav-page" href="#discord">Discord</a>
     <button class="btn-cringe" id="cringeBtn" aria-pressed="false">🌈 КРИНЖ-РЕЖИМ</button>
     <a class="btn btn-primary btn-small" href="https://discord.gg/ranMNxS6A" target="_blank" rel="noopener">Вступить</a>
@@ -700,8 +742,8 @@
 <!-- ================= БЕГУЩАЯ СТРОКА ================= -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ ФИДИТ — ПРАЙД ВИНРИТ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
-    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ ФИДИТ — ПРАЙД ВИНРИТ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ ФИДИТ — ПРАЙД ВИНРИТ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;ФИДЫ ДАНИ: ∞&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ ФИДИТ — ПРАЙД ВИНРИТ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;ФИДЫ ДАНИ: ∞&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
   </div>
 </div>
 
@@ -838,6 +880,85 @@
         <img src="images/clown.jpg" alt="Клоун" loading="lazy">
         <figcaption>ДАНЯ ПИКУЕТ ПУДЖА НА МИД. СЕРЬЁЗНО. 🤡</figcaption>
       </figure>
+
+      <figure class="gal reveal" style="--d:.42s">
+        <img src="images/angry-cat.jpg" alt="Злая кошка" loading="lazy">
+        <figcaption>ДАНЯ, КОГДА КТО-ТО ВЗЯЛ МИД 😾</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.49s">
+        <img src="images/goose.jpg" alt="Шипящий гусь" loading="lazy">
+        <figcaption>ДАНЯ В ГОЛОСЕ ПОСЛЕ ФАЙТА 🪿</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.56s">
+        <img src="images/pigeon.jpg" alt="Городской голубь" loading="lazy">
+        <figcaption>КУРЬЕР ДАНИ ПРИВЁЗ ФИД 🕊️</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.63s">
+        <img src="images/hamster.jpg" alt="Хомяк" loading="lazy">
+        <figcaption>ХОМЯК ФАРМИТ ЛЕС. ДАНЯ НЕ УСПЕЛ 🐹</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.7s">
+        <img src="images/banana.jpg" alt="Бананы" loading="lazy">
+        <figcaption>ДАНЯ ПИКУЕТ БАНАН. МЕТА, СЕРЬЁЗНО 🍌</figcaption>
+      </figure>
+    </div>
+
+    <div class="feed-counter reveal" id="feedCounter" role="button" title="Клик!">
+      <div class="fc-num" id="fcNum">1 700 000</div>
+      <div class="fc-label">фидов Дани за сезон · клик = +1 🔥</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЧАТ ПРАЙДА ================= -->
+<section id="chat">
+  <span class="sticker" style="top:12%;right:4%;font-size:2.5rem;animation-delay:.5s" aria-hidden="true">💬</span>
+  <div class="section-inner">
+    <div class="kicker reveal">/// архивные логи</div>
+    <h2 class="reveal" style="--d:.05s">НАШ DISCORD<br><span class="grad-text">(ЧЁСТНО)</span></h2>
+
+    <div class="chat reveal" style="--d:.1s">
+      <div class="chat-head"># общий-чат · сообщений: 4 000 002</div>
+      <div class="msg">
+        <img src="avatars/danya.jpg" alt="" loading="lazy">
+        <div>
+          <div class="mh"><b style="color:#a855f7">ДАНЯ</b><span class="time">сегодня в 03:14</span></div>
+          <p>я не фидер, я тактический отвлекающий манёвр</p>
+        </div>
+      </div>
+      <div class="msg">
+        <img src="avatars/valera.jpg" alt="" loading="lazy">
+        <div>
+          <div class="mh"><b style="color:#22d3ee">ВАЛЕРА</b><span class="time">сегодня в 03:15</span></div>
+          <p>я читал патчноут. там написано: молитесь</p>
+        </div>
+      </div>
+      <div class="msg">
+        <img src="avatars/maxon.jpg" alt="" loading="lazy">
+        <div>
+          <div class="mh"><b style="color:#fb923c">МАКСИМ</b><span class="time">сегодня в 03:15</span></div>
+          <p>РАШ Б. ПЛАН ГОТОВ. БОЛЬШЕ ПЛАНА НЕТ</p>
+        </div>
+      </div>
+      <div class="msg">
+        <span class="bot-ava">🐾</span>
+        <div>
+          <div class="mh"><b style="color:#4ade80">ПРАЙД-БОТ</b><span class="time">сегодня в 03:16</span></div>
+          <p>⚠️ Даня автоматически получил звание «главный фидер» · ранг: смело</p>
+        </div>
+      </div>
+      <div class="msg">
+        <img src="avatars/rita.jpg" alt="" loading="lazy">
+        <div>
+          <div class="mh"><b style="color:#f472b6">РИТА</b><span class="time">сегодня в 03:17</span></div>
+          <p>я в деле, меняйте игру</p>
+        </div>
+      </div>
+      <div class="chat-foot">даня печатает… уже 4 часа</div>
     </div>
   </div>
 </section>
@@ -1064,6 +1185,24 @@
     wrap.classList.add('roar');
     roarSound();
     if (document.body.classList.contains('cringe')) spawnEmoji(e.clientX, e.clientY, ['🔥','🐾','💥'], 6);
+  });
+
+  // счётчик фидов Дани
+  const fc = document.getElementById('feedCounter');
+  const fcNum = document.getElementById('fcNum');
+  let feeds = 1700000;
+  fc.addEventListener('click', e => {
+    feeds++;
+    fcNum.textContent = feeds.toLocaleString('ru-RU');
+    popSound();
+    fc.style.transform = 'scale(.96)';
+    setTimeout(() => fc.style.transform = '', 90);
+    if (feeds % 25 === 0) {
+      airhorn();
+      spawnEmoji(e.clientX, e.clientY, ['💀','🔥','💩','😱'], 12);
+    } else if (document.body.classList.contains('cringe')) {
+      spawnEmoji(e.clientX, e.clientY, ['💀','🔥'], 4);
+    }
   });
 
   // КРИНЖ-РЕЖИМ 🌈 (+ гудок)
