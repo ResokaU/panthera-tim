@@ -670,3 +670,86 @@
   gbBtn.addEventListener('click', postGb);
   gbInput.addEventListener('keydown', e => { if (e.key === 'Enter') postGb(); });
   renderGb();
+
+  // ===== АПИШКИ ПРАЙДА =====
+  function apiLoading(box, txt) { box.innerHTML = '<span class="api-load">' + txt + '</span>'; }
+  function apiFail(box, msg) { box.innerHTML = '<span class="api-err">' + msg + '</span>'; }
+
+  // 1) рандомный кот (cataas.com)
+  const catBox = document.getElementById('catBox');
+  function loadCat() {
+    apiLoading(catBox, 'ловим кота…');
+    const img = new Image();
+    img.onload = () => { catBox.innerHTML = ''; img.className = 'api-img'; catBox.appendChild(img); };
+    img.onerror = () => apiFail(catBox, 'кот ушёл фидить. жми ещё');
+    img.src = 'https://cataas.com/cat?width=520&r=' + Math.random();
+  }
+  document.getElementById('catBtn').addEventListener('click', () => { popSound(); loadCat(); });
+  loadCat();
+
+  // 2) погода в штабе (open-meteo)
+  const weatherBox = document.getElementById('weatherBox');
+  const wCodes = {
+    0: ['☀️', 'ясно'], 1: ['🌤', 'почти ясно'], 2: ['⛅', 'облачно'], 3: ['☁️', 'пасмурно'],
+    45: ['🌫', 'туман'], 48: ['🌫', 'туман'],
+    51: ['🌦', 'моросит'], 53: ['🌦', 'моросит'], 55: ['🌦', 'моросит'],
+    61: ['🌧', 'дождь'], 63: ['🌧', 'дождь'], 65: ['🌧', 'ЛЮТОЙ дождь'],
+    66: ['🌧', 'ледяной дождь'], 67: ['🌧', 'ледяной дождь'],
+    71: ['❄️', 'снег'], 73: ['❄️', 'снег'], 75: ['❄️', 'много снега'], 77: ['❄️', 'снежные зёрна'],
+    80: ['🌧', 'ливень'], 81: ['🌧', 'ливень'], 82: ['🌊', 'потоп'],
+    85: ['🌨', 'снежные залпы'], 86: ['🌨', 'снежные залпы'],
+    95: ['⛈', 'гроза'], 96: ['⛈', 'гроза с градом'], 99: ['⛈', 'гроза с градом'],
+  };
+  function loadWeather() {
+    apiLoading(weatherBox, 'смотрим в окно…');
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=55.75&longitude=37.62&current=temperature_2m,weather_code')
+      .then(r => r.json())
+      .then(d => {
+        const c = d.current;
+        const [emo, txt] = wCodes[c.weather_code] || ['🌡', 'что-то странное'];
+        weatherBox.innerHTML =
+          '<div><div class="api-emoji">' + emo + '</div>' +
+          '<div class="api-big">' + Math.round(c.temperature_2m) + '°C</div>' +
+          '<div class="api-note">' + txt + ' · вывод: идеальная погода для доты</div></div>';
+      })
+      .catch(() => apiFail(weatherBox, 'погода ушла в папку. тоже фидит'));
+  }
+  document.getElementById('weatherBtn').addEventListener('click', () => { popSound(); loadWeather(); });
+  loadWeather();
+
+  // 3) курс фида (open.er-api)
+  const feedBox = document.getElementById('feedBox');
+  function loadFeed() {
+    apiLoading(feedBox, 'звоним максиму…');
+    fetch('https://open.er-api.com/v6/latest/USD')
+      .then(r => r.json())
+      .then(d => {
+        const rub = d.rates.RUB;
+        const perFeed = (rub * 2).toFixed(0);
+        feedBox.innerHTML =
+          '<div><div class="api-big">1 фид = ' + perFeed + ' ₽</div>' +
+          '<div class="api-note">курс ЦБ + наценка максима за смелость · $1 = ' + rub.toFixed(2) + ' ₽</div></div>';
+      })
+      .catch(() => apiFail(feedBox, 'биржа фидов закрыта. максим спит'));
+  }
+  document.getElementById('feedBtn').addEventListener('click', () => { popSound(); loadFeed(); });
+  loadFeed();
+
+  // 4) стажёр дня (dog.ceo)
+  const dogBox = document.getElementById('dogBox');
+  function loadDog() {
+    apiLoading(dogBox, 'будим стажёра…');
+    fetch('https://dog.ceo/api/breeds/image/random')
+      .then(r => r.json())
+      .then(d => {
+        dogBox.innerHTML = '';
+        const img = new Image();
+        img.className = 'api-img';
+        img.src = d.message;
+        img.alt = 'Стажёр дня';
+        dogBox.appendChild(img);
+      })
+      .catch(() => apiFail(dogBox, 'стажёр сбежал. жми ещё'));
+  }
+  document.getElementById('dogBtn').addEventListener('click', () => { popSound(); loadDog(); });
+  loadDog();
