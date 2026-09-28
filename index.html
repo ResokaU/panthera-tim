@@ -835,6 +835,47 @@
   }
   .dc-s{display:block;font-family:'Rubik',sans-serif;font-size:.74rem;color:var(--muted)}
 
+  /* ---------- мем-радио ---------- */
+  .music-btn{
+    position:fixed;left:16px;bottom:62px;z-index:60;
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.5rem .95rem;border-radius:999px;cursor:pointer;
+    border:1px solid rgba(34,211,238,.4);background:rgba(6,5,18,.85);
+    color:var(--cyan);font-family:'Unbounded',sans-serif;font-size:.6rem;font-weight:600;
+    letter-spacing:.08em;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    transition:box-shadow .25s, color .25s, border-color .25s;
+  }
+  .music-btn:hover{box-shadow:0 0 18px rgba(34,211,238,.35)}
+  .music-btn.on{color:#4ade80;border-color:rgba(74,222,128,.5);box-shadow:0 0 18px rgba(74,222,128,.4)}
+  body.music-on .panther{animation:pantherDance .45s ease-in-out infinite}
+  @keyframes pantherDance{
+    0%,100%{transform:rotate(-4deg)}
+    50%{transform:rotate(5deg) translateY(-8px)}
+  }
+  body.music-on .sticker{animation-duration:1.1s}
+  body.music-on .marquee-track{animation-duration:12s}
+
+  /* ---------- стена бурмалды ---------- */
+  .b-sub{color:var(--muted);max-width:34rem;margin:-1.6rem auto 2.4rem;text-align:center;line-height:1.6}
+  .burmala-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:1.1rem;max-width:1000px;margin:0 auto;transition:opacity .25s;
+  }
+  .bm-card{
+    background:linear-gradient(180deg, rgba(21,16,48,.72), rgba(10,8,26,.72));
+    border:1px solid rgba(168,85,247,.14);
+    border-left:4px solid var(--c,#a855f7);
+    border-radius:14px;padding:1.1rem 1.2rem;color:#c9c4ef;
+    font-size:.95rem;line-height:1.55;
+    transform:rotate(var(--r,0deg));transition:transform .3s, box-shadow .3s;
+  }
+  .bm-card:hover{transform:rotate(0) scale(1.02);box-shadow:0 14px 40px -14px var(--c)}
+  .burmala-btns{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.4rem}
+  .nothing-note{
+    text-align:center;margin-top:1.2rem;min-height:1.5em;
+    font-family:'Comic Sans MS',cursive;font-weight:700;color:#facc15;
+  }
+
   .reveal{
     opacity:0;transform:translateY(30px);
     transition:opacity .7s ease var(--d,0s), transform .7s ease var(--d,0s);
@@ -870,6 +911,7 @@
 <div id="particles"></div>
 <div class="meter-bar" id="meterBar"></div>
 <div class="meter-chip" id="meterChip">КРИНЖ-МЕТР: 0%</div>
+<button class="music-btn" id="musicBtn">🎵 МЕМ-РАДИО: ВЫКЛ</button>
 
 <nav>
   <a class="logo" href="#top">🐾 ПАНТЕРА <em>ТИМ</em></a>
@@ -1508,6 +1550,24 @@
   </div>
 </section>
 
+<!-- ================= СТЕНА БУРМАЛДЫ ================= -->
+<section id="burmala">
+  <span class="sticker" style="top:12%;right:4%;font-size:2.6rem;animation-delay:.5s" aria-hidden="true">🌀</span>
+  <div class="section-inner">
+    <div class="kicker reveal">/// стена бурмалды</div>
+    <h2 class="reveal" style="--d:.05s">СТЕНА<br><span class="grad-text">БУРМАЛДЫ</span></h2>
+    <p class="b-sub reveal" style="--d:.08s">жми «перемешать» — стена несёт новую чушь. всё написанное здесь — чистая правда.</p>
+
+    <div class="burmala-grid" id="burmalaGrid"></div>
+
+    <div class="burmala-btns reveal" style="--d:.15s">
+      <button class="btn btn-ghost" id="shuffleBurmala">🌀 ПЕРЕМЕШАТЬ БУРМАЛДУ</button>
+      <button class="btn btn-primary" id="nothingBtn">КНОПКА НИЧЕГО</button>
+    </div>
+    <div class="nothing-note" id="nothingNote"></div>
+  </div>
+</section>
+
 <!-- ================= DISCORD ================= -->
 <section id="discord">
   <div class="cta-panel reveal">
@@ -2055,6 +2115,164 @@
       popSound();
       if (votes[name] % 50 === 0) airhorn();
     });
+  });
+  // МЕМ-РАДИО 🎵 (синтез в браузере, без файлов)
+  const musBtn = document.getElementById('musicBtn');
+  const stations = ['🎵 МЕМ-РАДИО: ВЫКЛ','🔊 ХАРДБАСС ПРАЙДА','🎮 8-БИТ МЕМЫ','🐱 МЯУ-РЕМИКС'];
+  let station = 0, musicStep = 0, musicTimer = null;
+
+  function kick(t) {
+    const o = audioCtx().createOscillator(), g = audioCtx().createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(150, t);
+    o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
+    g.gain.setValueAtTime(0.6, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+    o.connect(g).connect(audioCtx().destination);
+    o.start(t); o.stop(t + 0.16);
+  }
+  function bassNote(t, f) {
+    const o = audioCtx().createOscillator(), g = audioCtx().createGain(), fl = audioCtx().createBiquadFilter();
+    o.type = 'square'; o.frequency.setValueAtTime(f, t);
+    fl.type = 'lowpass'; fl.frequency.value = 500;
+    g.gain.setValueAtTime(0.22, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    o.connect(fl).connect(g).connect(audioCtx().destination);
+    o.start(t); o.stop(t + 0.19);
+  }
+  function chipNote(t, f) {
+    const o = audioCtx().createOscillator(), g = audioCtx().createGain();
+    o.type = 'square'; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0.1, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+    o.connect(g).connect(audioCtx().destination);
+    o.start(t); o.stop(t + 0.16);
+  }
+  function hat(t) {
+    const ctx = audioCtx();
+    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.04, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const f = ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = 6000;
+    const g = ctx.createGain(); g.gain.value = 0.08;
+    src.connect(f).connect(g).connect(ctx.destination);
+    src.start(t);
+  }
+  function meowBlip(t, mult) {
+    const ctx = audioCtx(), dur = 0.32;
+    const o = ctx.createOscillator(); o.type = 'sawtooth';
+    o.frequency.setValueAtTime(420 * mult, t);
+    o.frequency.exponentialRampToValueAtTime(880 * mult, t + 0.1);
+    o.frequency.exponentialRampToValueAtTime(520 * mult, t + dur);
+    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.5;
+    f.frequency.setValueAtTime(950 * mult, t);
+    f.frequency.exponentialRampToValueAtTime(1400 * mult, t + dur);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.28, t + 0.04);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(f).connect(g).connect(ctx.destination);
+    o.start(t); o.stop(t + dur);
+  }
+
+  function scheduleMusicStep() {
+    const ctx = audioCtx();
+    const t = ctx.currentTime + 0.06;
+    const s = musicStep % 16;
+    if (station === 1) {
+      if (s % 4 === 0) kick(t);
+      if (s % 4 === 2) bassNote(t, [55, 55, 65.41, 49][Math.floor(musicStep / 4) % 4]);
+      if (s % 2 === 1) hat(t);
+    } else if (station === 2) {
+      const m = [523, 0, 659, 784, 659, 0, 523, 392, 523, 0, 659, 880, 784, 659, 523, 0][s];
+      if (m) chipNote(t, m);
+      if (s % 4 === 2) hat(t);
+    } else if (station === 3) {
+      if (s % 4 === 0) meowBlip(t, [1, 1.4, 0.8, 1.2][Math.floor(musicStep / 4) % 4]);
+      if (s % 8 === 4) kick(t);
+    }
+    musicStep++;
+  }
+  function stopMusic() {
+    if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+    document.body.classList.remove('music-on');
+  }
+  function startMusic() {
+    stopMusic();
+    if (station === 0) return;
+    audioCtx();
+    musicTimer = setInterval(scheduleMusicStep, station === 2 ? 170 : 200);
+    document.body.classList.add('music-on');
+  }
+  musBtn.addEventListener('click', () => {
+    station = (station + 1) % stations.length;
+    musBtn.textContent = stations[station];
+    musBtn.classList.toggle('on', station > 0);
+    if (station === 0) stopMusic();
+    else { popSound(); startMusic(); }
+  });
+  addEventListener('keydown', e => {
+    if (e.key.toLowerCase() === 'm' && !e.repeat) musBtn.click();
+  });
+
+  // СТЕНА БУРМАЛДЫ
+  const burmalaLines = [
+    'если долго смотреть в миникарту — миникарта начнёт смотреть в тебя',
+    'курица из Chicken Gun знает, что ты сделал в том матче',
+    'даня сказал «ещё катку». было 4:00 утра. это было вчера',
+    'у валеры всегда есть план. он просто его не помнит',
+    'максим играет на 0.75 скорости, зато громко',
+    'рита не проиграла ни одной катки. вопрос — а играла ли',
+    '9 из 10 крипов боятся прайда. десятый — максим',
+    'пантера спит 20 часов в сутки. как мы на созвонах',
+    'каждый раз, когда ты фидишь, где-то плачет крип',
+    'чтобы понять прайд, нужно стать прайдом. не делай этого',
+    'гусь видел твой последний клатч. он не в восторге',
+    'хомяк фармит лес быстрее. это доказано scientifically',
+    'в нашей команде нет токсиков. есть амфибии',
+    'лучший саппорт — тишина в голосовом после фида',
+    'бабушка максима прошла Geometry Dash с закрытыми глазами',
+    'этот сайт весит меньше, чем холодильник максима',
+    'даня не фидит. он делает красиво. просто вы не видите красоты',
+    'прайд бьёт первым. иногда — себя',
+  ];
+  const bmPalette = ['#a855f7', '#22d3ee', '#ff2d55', '#facc15', '#4ade80', '#f472b6'];
+  const bmGrid = document.getElementById('burmalaGrid');
+  function renderBurmala() {
+    const pool = [...burmalaLines].sort(() => Math.random() - .5);
+    bmGrid.innerHTML = '';
+    pool.slice(0, 6).forEach(txt => {
+      const d = document.createElement('div');
+      d.className = 'bm-card';
+      d.style.setProperty('--c', bmPalette[Math.floor(Math.random() * bmPalette.length)]);
+      d.style.setProperty('--r', (Math.random() * 3 - 1.5).toFixed(2) + 'deg');
+      d.textContent = txt;
+      bmGrid.appendChild(d);
+    });
+  }
+  renderBurmala();
+  document.getElementById('shuffleBurmala').addEventListener('click', e => {
+    popSound();
+    bmGrid.style.opacity = 0;
+    setTimeout(() => { renderBurmala(); bmGrid.style.opacity = 1; }, 250);
+    if (document.body.classList.contains('cringe')) spawnEmoji(e.clientX, e.clientY, ['🌀','✨','🔥'], 6);
+  });
+
+  // КНОПКА НИЧЕГО
+  const nothingBtn = document.getElementById('nothingBtn');
+  const nothingNote = document.getElementById('nothingNote');
+  let nothingCount = 0;
+  nothingBtn.addEventListener('click', e => {
+    nothingCount++;
+    if (nothingCount === 1) nothingNote.textContent = 'ничего не произошло.';
+    else if (nothingCount === 2) nothingNote.textContent = 'всё ещё ничего. попробуй ещё раз.';
+    else if (nothingCount === 3) nothingNote.textContent = 'упорный. мне нравится.';
+    else if (nothingCount === 4) {
+      nothingNote.textContent = 'ладно. вот твоя награда 🎁';
+      airhorn();
+      spawnEmoji(e.clientX, e.clientY, ['🎁','🎉','🔥','🐾','👑','💖'], 16);
+    } else nothingNote.textContent = 'награда уже выдана. дальше ничего. честно.';
   });
 </script>
 </body>
