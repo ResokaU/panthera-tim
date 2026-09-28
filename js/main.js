@@ -551,6 +551,8 @@
     ugar: 'Акробат года 🤸',
     oracle: 'Познал оракула 🔮',
     react_played: 'Нейронка работает ⚡',
+    p3d_played: 'В 3D-измерении 🕹',
+    p3d_pro: '3D-профи: 10+ очков 🕹',
   };
   function renderAchCount() {
     const seen = JSON.parse(localStorage.getItem('panthera_ach') || '[]');
@@ -707,7 +709,7 @@
   };
   function loadWeather() {
     apiLoading(weatherBox, 'смотрим в окно…');
-    fetchT('', 7000)
+    fetchT('https://api.open-meteo.com/v1/forecast?latitude=55.75&longitude=37.62&current=temperature_2m,weather_code', 7000)
       .then(r => r.json())
       .then(d => {
         const c = d.current;
@@ -726,7 +728,7 @@
   const feedBox = document.getElementById('feedBox');
   function loadFeed() {
     apiLoading(feedBox, 'звоним максиму…');
-    fetchT('', 8000)
+    fetchT('https://open.er-api.com/v6/latest/USD', 8000)
       .then(r => r.json())
       .then(d => {
         const rub = d.rates.RUB;
@@ -740,21 +742,41 @@
   document.getElementById('feedBtn').addEventListener('click', () => { popSound(); loadFeed(); });
   loadFeed();
 
-  // 4) стажёр дня (dog.ceo)
+  // 4) стажёр дня (placedog.net — прямая картинка)
   const dogBox = document.getElementById('dogBox');
   function loadDog() {
     apiLoading(dogBox, 'будим стажёра…');
-    fetchT('', 8000)
-      .then(r => r.json())
-      .then(d => {
-        dogBox.innerHTML = '';
-        const img = new Image();
-        img.className = 'api-img';
-        img.src = d.message;
-        img.alt = 'Стажёр дня';
-        dogBox.appendChild(img);
-      })
-      .catch(() => apiFail(dogBox, 'стажёр сбежал. жми ещё'));
+    const img = new Image();
+    img.onload = () => { dogBox.innerHTML = ''; img.className = 'api-img'; dogBox.appendChild(img); };
+    img.onerror = () => apiFail(dogBox, 'стажёр сбежал. жми ещё');
+    img.src = 'https://placedog.net/520/380?r=' + Math.random();
   }
   document.getElementById('dogBtn').addEventListener('click', () => { popSound(); loadDog(); });
   loadDog();
+  // ЛЕНИВАЯ ЗАГРУЗКА 3D-ИГРЫ (three.js + game3d.js)
+  const g3dSec = document.getElementById('game3d-sec');
+  let g3dLoaded = false;
+  function load3d() {
+    if (g3dLoaded) return;
+    g3dLoaded = true;
+    const t1 = document.createElement('script');
+    t1.src = 'https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js';
+    t1.onload = () => {
+      const t2 = document.createElement('script');
+      t2.src = 'js/game3d.js';
+      document.body.appendChild(t2);
+    };
+    t1.onerror = () => {
+      const s = document.getElementById('g3dStart');
+      if (s) s.textContent = '3D НЕ ЗАГРУЗИЛОСЬ — ИНТЕРНЕТ ФИДИТ 🥲';
+    };
+    document.body.appendChild(t1);
+  }
+  if (g3dSec) {
+    const io3d = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (e.isIntersecting) { load3d(); io3d.disconnect(); }
+      });
+    }, { rootMargin: '500px' });
+    io3d.observe(g3dSec);
+  }

@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
 
@@ -36,7 +36,7 @@
     <a class="nav-page" href="#games">Игры</a>
     <a class="nav-page" href="#memes">Мемы</a>
     <a class="nav-page" href="#chat">Чат</a>
-    <span class="ach-badge" id="achBadge">🏅 0/15</span>
+    <span class="ach-badge" id="achBadge">🏅 0/17</span>
     <a class="nav-page" href="#discord">Discord</a>
     <button class="btn-cringe" id="cringeBtn" aria-pressed="false">🌈 КРИНЖ-РЕЖИМ</button>
     <a class="btn btn-primary btn-small" href="https://discord.gg/ranMNxS6A" target="_blank" rel="noopener">Вступить</a>
@@ -540,6 +540,39 @@
   </div>
 </section>
 
+<!-- ================= 3D ИГРА ================= -->
+<section id="game3d-sec">
+  <span class="sticker" style="top:12%;right:5%;font-size:2.4rem;animation-delay:.5s" aria-hidden="true">🕹️</span>
+  <div class="section-inner">
+    <div class="kicker reveal">/// прайд-драйв 3d</div>
+    <h2 class="reveal" style="--d:.05s">3D ОХОТА<br><span class="grad-text">ПРАЙДА</span></h2>
+    <p class="b-sub reveal" style="--d:.08s">выбери свою пантеру, собирай пиццу и звёзды, беги от фидов. WASD / стрелки / палец по арене. 30 секунд угара.</p>
+
+    <div class="g3d-select reveal" style="--d:.1s" id="g3dSelect">
+      <button class="g3d-char" data-i="0" style="--c:#a855f7">👑 ДАНЯ</button>
+      <button class="g3d-char" data-i="1" style="--c:#22d3ee">⚡ ВАЛЕРА</button>
+      <button class="g3d-char" data-i="2" style="--c:#fb923c">🔥 МАКСИМ</button>
+      <button class="g3d-char" data-i="3" style="--c:#f472b6">🌙 РИТА</button>
+    </div>
+
+    <div class="g3d-wrap reveal" style="--d:.15s" id="g3dWrap">
+      <div class="g3d-hud">
+        <span id="g3dName">выбери пантеру</span>
+        <span>СЧЁТ: <b id="g3dScore">0</b></span>
+        <span>⏱ <b id="g3dTime">30</b> СЕК</span>
+        <span>РЕКОРД: <b id="g3dBest">0</b></span>
+      </div>
+      <div class="g3d-start" id="g3dStart">▶ СТАРТ ОХОТЫ (WASD / стрелки)</div>
+      <div class="g3d-over hidden" id="g3dOver">
+        <div class="g3d-over-title">ВРЕМЯ ВЫШЛО</div>
+        <div class="g3d-over-score" id="g3dFinal">0</div>
+        <button class="btn btn-primary btn-small" id="g3dAgain">ЕЩЁ РАЗ</button>
+      </div>
+    </div>
+    <div class="fc-label reveal" style="--d:.2s">🍕 +1 · ⭐ +2 · 💩 −2 · у каждой пантеры свой рекорд</div>
+  </div>
+</section>
+
 <!-- ================= ХРОНИКА ================= -->
 <section id="history">
   <span class="sticker" style="top:14%;left:4%;font-size:2.4rem;animation-delay:.9s" aria-hidden="true">🏆</span>
@@ -808,7 +841,7 @@
 <canvas id="viz"></canvas>
 <div id="achToasts"></div>
 
-<script src="js/audio.js?v=5" defer></script>
-<script src="js/main.js?v=5" defer></script>
+<script src="js/audio.js?v=6" defer></script>
+<script src="js/main.js?v=6" defer></script>
 </body>
 </html>
