@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ПАНТЕРА ТИМ — кибер-прайд</title>
 <meta name="description" content="ПАНТЕРА ТИМ — кибер-прайд. Dota 2, Standoff 2, Chicken Gun, Minecraft. Даня, Валера, Максим и Рита. Залетай в Discord!">
+<meta name="theme-color" content="#05050f">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐆</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,6 +69,21 @@
   @keyframes rise{
     0%{transform:translateY(0);opacity:.8}
     100%{transform:translateY(-110vh);opacity:0}
+  }
+
+  /* ---------- кринж-метр ---------- */
+  .meter-bar{
+    position:fixed;top:0;left:0;height:4px;width:0;z-index:60;
+    background:linear-gradient(90deg,#a855f7,#ff2d55,#facc15);
+    box-shadow:0 0 12px rgba(255,45,85,.8);
+  }
+  .meter-chip{
+    position:fixed;left:16px;bottom:16px;z-index:60;
+    font-family:'Unbounded',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.1em;
+    color:#ff5c7a;background:rgba(6,5,18,.82);
+    border:1px solid rgba(255,45,85,.4);
+    padding:.45rem .85rem;border-radius:99px;
+    pointer-events:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   }
 
   /* ---------- навбар ---------- */
@@ -205,7 +221,7 @@
   }
   .tagline b{color:var(--text);font-weight:600}
   .cta{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2.6rem}
-  .stats{display:flex;gap:2.6rem;flex-wrap:wrap}
+  .stats{display:flex;gap:2.4rem;flex-wrap:wrap}
   .stats b{
     display:block;font-family:'Unbounded',sans-serif;font-weight:800;font-size:1.7rem;
     background:linear-gradient(90deg,var(--purple),var(--red));
@@ -283,8 +299,8 @@
   @keyframes scroll{to{transform:translateX(-50%)}}
 
   /* ---------- секции ---------- */
-  section{padding:6.5rem 6vw}
-  .section-inner{max-width:1150px;margin:0 auto}
+  section{padding:6.5rem 6vw;position:relative}
+  .section-inner{max-width:1150px;margin:0 auto;position:relative;z-index:1}
   .kicker{
     font-family:'Unbounded',sans-serif;font-size:.78rem;font-weight:600;
     letter-spacing:.3em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;
@@ -294,13 +310,24 @@
     font-size:clamp(1.7rem,4vw,2.9rem);line-height:1.15;margin-bottom:3rem;
   }
 
+  /* ---------- стикеры-фигня ---------- */
+  .sticker{
+    position:absolute;z-index:0;pointer-events:none;
+    filter:drop-shadow(0 0 14px rgba(168,85,247,.65));
+    animation:stickerSpin 6s ease-in-out infinite;
+  }
+  @keyframes stickerSpin{
+    0%,100%{transform:rotate(-14deg) scale(1)}
+    50%{transform:rotate(16deg) scale(1.18)}
+  }
+
   /* ---------- состав ---------- */
   .team-grid{
     display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;
   }
   .card{
     --c:var(--purple);
-    position:relative;overflow:hidden;
+    position:relative;overflow:hidden;cursor:pointer;
     background:linear-gradient(180deg, rgba(21,16,48,.72), rgba(10,8,26,.72));
     border:1px solid rgba(168,85,247,.14);
     border-radius:24px;padding:2.1rem 1.7rem 1.9rem;
@@ -317,6 +344,14 @@
     box-shadow:0 22px 60px -18px var(--c);
   }
   .card:hover::before{opacity:1}
+  .ribbon{
+    position:absolute;top:17px;right:-36px;z-index:2;
+    transform:rotate(38deg);
+    background:linear-gradient(90deg,var(--c),var(--red));
+    color:#fff;font-family:'Unbounded',sans-serif;font-size:.56rem;font-weight:700;
+    letter-spacing:.14em;padding:.32rem 2.6rem;
+    box-shadow:0 4px 18px rgba(0,0,0,.45);
+  }
   .avatar{
     position:relative;width:96px;height:96px;margin-bottom:1.3rem;
     border-radius:50%;overflow:visible;
@@ -352,12 +387,27 @@
   .hours.rare{
     color:#67e8f9;background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.45);
   }
+  .card-bubble{
+    position:absolute;top:-14px;right:14px;z-index:5;
+    background:#fff;color:#111;
+    font-family:'Comic Sans MS',cursive;font-weight:700;font-size:.85rem;
+    padding:.45rem .8rem;border-radius:12px 12px 12px 2px;
+    animation:bubblePop 1.5s ease forwards;
+    pointer-events:none;white-space:nowrap;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+  }
+  @keyframes bubblePop{
+    0%{opacity:0;transform:translateY(8px) scale(.6)}
+    15%{opacity:1;transform:none}
+    80%{opacity:1}
+    100%{opacity:0;transform:translateY(-8px)}
+  }
 
   /* ---------- дисциплины ---------- */
   .games-grid{
     display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.3rem;
   }
-  .game-card{padding:1.6rem 1.5rem 1.6rem}
+  .game-card{padding:1.6rem 1.5rem 1.6rem;cursor:default}
   .game-img{
     position:relative;height:140px;border-radius:14px;overflow:hidden;
     margin-bottom:1.05rem;display:grid;place-items:center;
@@ -374,7 +424,7 @@
   }
   .game-card h3{font-size:1.15rem;margin-bottom:.45rem}
 
-  /* ---------- кринж-галерея ---------- */
+  /* ---------- мемы и галерея (демотиваторы) ---------- */
   .gal-grid{
     display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;
   }
@@ -387,6 +437,7 @@
   .gal img{
     width:100%;height:200px;object-fit:cover;display:block;border-radius:2px;
   }
+  .gal img.pad{object-fit:contain;background:#fff;padding:16px}
   .gal figcaption{
     font-family:'Impact','Arial Black',sans-serif;
     font-size:1.02rem;letter-spacing:.03em;text-transform:uppercase;
@@ -430,6 +481,47 @@
   .paws span{display:inline-block}
   .paws span:nth-child(even){transform:translateY(7px)}
   .credits{margin-top:.7rem;font-size:.78rem;opacity:.6}
+
+  /* ---------- РИТА-ВИДЖЕТ ---------- */
+  .rita{
+    position:fixed;right:22px;bottom:26px;z-index:80;
+    width:96px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
+  }
+  .rita img{
+    width:92px;height:92px;border-radius:50%;object-fit:cover;display:block;
+    border:3px solid transparent;
+    background:
+      linear-gradient(#0b0a1d,#0b0a1d) padding-box,
+      linear-gradient(135deg,#f472b6,#a855f7,#22d3ee) border-box;
+    box-shadow:0 0 28px rgba(244,114,182,.55), 0 10px 30px rgba(0,0,0,.5);
+    animation:wiggle 2.8s ease-in-out infinite;
+  }
+  @keyframes wiggle{
+    0%,100%{transform:rotate(-7deg)}
+    50%{transform:rotate(7deg)}
+  }
+  .rita:hover img{animation-duration:.7s}
+  .rita .ear{
+    position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(10deg);
+    font-size:1.4rem;filter:drop-shadow(0 0 8px rgba(244,114,182,.8));
+  }
+  .rita .hint{
+    position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
+    font-family:'Unbounded',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.12em;
+    color:#f9a8d4;background:#0b0a1d;
+    border:1px solid rgba(244,114,182,.45);border-radius:99px;
+    padding:.22rem .6rem;white-space:nowrap;
+  }
+  .rita-bubble{
+    position:absolute;bottom:112%;right:0;
+    background:#fff;color:#111;
+    font-family:'Comic Sans MS',cursive;font-weight:700;font-size:.92rem;
+    padding:.55rem .9rem;border-radius:16px 16px 2px 16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+    opacity:0;pointer-events:none;white-space:nowrap;
+    transition:opacity .2s, transform .2s;
+  }
+  .rita-bubble.show{opacity:1;transform:translateY(-6px)}
 
   /* ---------- эмодзи-взрывы ---------- */
   .boom{
@@ -489,6 +581,9 @@
     .nav-links a.nav-page{display:none}
     .panther-wrap{width:min(400px,86vw)}
     .hero::before{opacity:.12}
+    .rita{width:74px;right:14px;bottom:20px}
+    .rita img{width:70px;height:70px}
+    .meter-chip{left:12px;bottom:12px;font-size:.55rem}
   }
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
@@ -503,13 +598,15 @@
 <div class="scanlines"></div>
 <div id="cursor-glow"></div>
 <div id="particles"></div>
+<div class="meter-bar" id="meterBar"></div>
+<div class="meter-chip" id="meterChip">КРИНЖ-МЕТР: 0%</div>
 
 <nav>
   <a class="logo" href="#top">🐾 ПАНТЕРА <em>ТИМ</em></a>
   <div class="nav-links">
     <a class="nav-page" href="#team">Состав</a>
     <a class="nav-page" href="#games">Игры</a>
-    <a class="nav-page" href="#gallery">Галерея</a>
+    <a class="nav-page" href="#memes">Мемы</a>
     <a class="nav-page" href="#discord">Discord</a>
     <button class="btn-cringe" id="cringeBtn" aria-pressed="false">🌈 КРИНЖ-РЕЖИМ</button>
     <a class="btn btn-primary btn-small" href="https://discord.gg/ranMNxS6A" target="_blank" rel="noopener">Вступить</a>
@@ -527,7 +624,7 @@
     <p class="tagline">
       Мы — <b>кибер-прайд</b>: Dota 2, Standoff 2, Chicken Gun и Minecraft.
       Да, мы все <b>бездари и фидеры</b> — но <b>жёсткие</b>.
-      Нажми на пантеру, если не трусишь.
+      Нажми на пантеру, если не трусишь. И покорми Риту в углу. 🐾
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://discord.gg/ranMNxS6A" target="_blank" rel="noopener">
@@ -539,6 +636,7 @@
     <div class="stats">
       <div><b>04</b><span>пантеры в прайде</span></div>
       <div><b>2300+</b><span>часов в Dota</span></div>
+      <div><b>100%</b><span>кринжа</span></div>
       <div><b>∞</b><span>драйва</span></div>
     </div>
   </div>
@@ -571,11 +669,9 @@
           </filter>
         </defs>
 
-        <!-- орбитальные кольца -->
         <circle class="ring" cx="240" cy="240" r="216" fill="none" stroke="rgba(168,85,247,.20)" stroke-width="2" stroke-dasharray="5 15"/>
         <circle class="ring2" cx="240" cy="240" r="196" fill="none" stroke="rgba(255,45,85,.12)" stroke-width="2" stroke-dasharray="3 22"/>
 
-        <!-- искры -->
         <g fill="#e9d5ff">
           <circle class="spark" cx="70" cy="80" r="2.2"/>
           <circle class="spark" cx="410" cy="110" r="2.6" style="animation-delay:.4s" fill="#67e8f9"/>
@@ -586,28 +682,23 @@
           <circle class="spark" cx="368" cy="420" r="2" style="animation-delay:2s"/>
         </g>
 
-        <!-- уши -->
         <polygon points="100,158 152,62 185,160" fill="#0e0a20" stroke="url(#neonGrad)" stroke-width="3" stroke-linejoin="round"/>
         <polygon points="380,158 328,62 295,160" fill="#0e0a20" stroke="url(#neonGrad)" stroke-width="3" stroke-linejoin="round"/>
         <polygon points="117,146 152,88 170,150" fill="url(#neonGrad)" opacity=".4"/>
         <polygon points="363,146 328,88 310,150" fill="url(#neonGrad)" opacity=".4"/>
 
-        <!-- голова -->
         <polygon points="240,95 320,105 360,160 395,250 368,275 385,308 345,322 362,352 315,362 240,392 165,362 118,352 135,322 95,308 112,275 85,250 120,160 160,105"
                  fill="url(#furGrad)" stroke="url(#neonGrad)" stroke-width="3" stroke-linejoin="round" filter="url(#glow)"/>
 
-        <!-- линии лба -->
         <g stroke="url(#neonGrad)" stroke-width="3" stroke-linecap="round" opacity=".6">
           <line x1="240" y1="108" x2="240" y2="140"/>
           <line x1="222" y1="110" x2="216" y2="142"/>
           <line x1="258" y1="110" x2="264" y2="142"/>
         </g>
 
-        <!-- брови -->
         <polygon points="128,170 206,194 202,210 132,186" fill="#241646" stroke="url(#neonGrad)" stroke-width="2" opacity=".95" stroke-linejoin="round"/>
         <polygon points="352,170 274,194 278,210 348,186" fill="#241646" stroke="url(#neonGrad)" stroke-width="2" opacity=".95" stroke-linejoin="round"/>
 
-        <!-- глаза: свечение + ядро + зрачки -->
         <polygon class="eye-glow" points="142,196 210,210 196,234 150,222" fill="url(#eyeGrad)" filter="url(#glow)"/>
         <polygon class="eye-glow" points="338,196 270,210 284,234 330,222" fill="url(#eyeGrad)" filter="url(#glow)"/>
         <polygon points="142,196 210,210 196,234 150,222" fill="url(#eyeGrad)" stroke="#e0faff" stroke-width="1"/>
@@ -619,26 +710,22 @@
         <circle cx="176" cy="211" r="2.2" fill="#fff" opacity=".9"/>
         <circle cx="296" cy="211" r="2.2" fill="#fff" opacity=".9"/>
 
-        <!-- следы от слёз -->
         <g stroke="#7c3aed" stroke-width="3" stroke-linecap="round" opacity=".5" fill="none">
           <path d="M150,226 L136,272"/>
           <path d="M330,226 L344,272"/>
         </g>
 
-        <!-- нос и пасть -->
         <line x1="240" y1="222" x2="240" y2="268" stroke="url(#neonGrad)" stroke-width="2" opacity=".35"/>
         <polygon points="216,280 264,280 240,306" fill="url(#neonGrad)" stroke="#d8b4fe" stroke-width="1" stroke-linejoin="round" filter="url(#glowSoft)"/>
         <line x1="240" y1="306" x2="240" y2="328" stroke="url(#neonGrad)" stroke-width="3" stroke-linecap="round" opacity=".8"/>
         <path d="M240,328 Q214,344 190,332" fill="none" stroke="url(#neonGrad)" stroke-width="3" stroke-linecap="round" opacity=".85"/>
         <path d="M240,328 Q266,344 290,332" fill="none" stroke="url(#neonGrad)" stroke-width="3" stroke-linecap="round" opacity=".85"/>
 
-        <!-- усы-точки -->
         <g fill="#22d3ee" opacity=".6">
           <circle cx="206" cy="294" r="1.8"/><circle cx="214" cy="304" r="1.8"/><circle cx="200" cy="304" r="1.8"/>
           <circle cx="274" cy="294" r="1.8"/><circle cx="266" cy="304" r="1.8"/><circle cx="280" cy="304" r="1.8"/>
         </g>
 
-        <!-- усы -->
         <g stroke="#67e8f9" stroke-width="2" fill="none" opacity=".3">
           <path d="M150,290 Q100,282 60,272"/>
           <path d="M152,302 Q102,306 64,316"/>
@@ -656,47 +743,53 @@
 <!-- ================= БЕГУЩАЯ СТРОКА ================= -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;ПРАЙД БЬЁТ ПЕРВЫМ&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
-    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;ПРАЙД БЬЁТ ПЕРВЫМ&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ ФИДИТ — ПРАЙД ВИНРИТ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+    <span>ПАНТЕРА ТИМ&nbsp;&nbsp;✦&nbsp;&nbsp;DOTA 2&nbsp;&nbsp;✦&nbsp;&nbsp;ДАНЯ ФИДИТ — ПРАЙД ВИНРИТ&nbsp;&nbsp;✦&nbsp;&nbsp;STANDOFF 2&nbsp;&nbsp;✦&nbsp;&nbsp;CHICKEN GUN&nbsp;&nbsp;✦&nbsp;&nbsp;MINECRAFT&nbsp;&nbsp;✦&nbsp;&nbsp;КРИНЖ 100%&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
   </div>
 </div>
 
 <!-- ================= СОСТАВ ================= -->
 <section id="team">
+  <span class="sticker" style="top:9%;left:3%;font-size:2.6rem" aria-hidden="true">⚔️</span>
+  <span class="sticker" style="bottom:12%;right:4%;font-size:2.2rem;animation-delay:1.2s" aria-hidden="true">🌈</span>
   <div class="section-inner">
     <div class="kicker reveal">/// наш состав</div>
     <h2 class="reveal" style="--d:.05s">СОСТАВ, КОТОРЫЙ<br><span class="grad-text">НЕ ПРОЩАЕТ</span></h2>
 
     <div class="team-grid">
       <article class="card reveal" style="--c:#a855f7;--d:.0s">
+        <div class="ribbon">ГЛАВНЫЙ ФИДЕР</div>
         <div class="avatar"><img src="avatars/danya.jpg" alt="Даня"><span>👑</span></div>
         <h3>ДАНЯ</h3>
         <div class="role">Глава прайда</div>
-        <p>1700 часов в Dota и капитанский голос. Решение принято — прайд уже бежит по миникарте.</p>
+        <p>1700 часов в Dota. Варды не ставит принципиально — говорит, это для слабых. Легенда лобби.</p>
         <div class="hours">🔥 1700 ч в Dota</div>
       </article>
 
       <article class="card reveal" style="--c:#22d3ee;--d:.08s">
+        <div class="ribbon">МОЗГ ПРАЙДА</div>
         <div class="avatar"><img src="avatars/valera.jpg" alt="Валера"><span>⚡</span></div>
         <h3>ВАЛЕРА</h3>
         <div class="role">Правая лапа</div>
-        <p>400 часов в Dota и холодная голова. План, ганг, контроль карты — всё по красоте.</p>
+        <p>400 часов и единственный, кто читает патчноуты. Ходячая википедия. Опасен на миде.</p>
         <div class="hours">🔥 400 ч в Dota</div>
       </article>
 
       <article class="card reveal" style="--c:#fb923c;--d:.16s">
+        <div class="ribbon">РАШ Б</div>
         <div class="avatar"><img src="avatars/maxon.jpg" alt="Максим"><span>🔥</span></div>
         <h3>МАКСИМ</h3>
         <div class="role">Коготь</div>
-        <p>200 часов в Dota с агрессией на 2000. Первый влетает в драку, последний выходит из чата.</p>
+        <p>200 часов, 200 смертей. Идеальный баланс, как в патче 7.00. Первый в драке, всегда.</p>
         <div class="hours">🔥 200 ч в Dota</div>
       </article>
 
       <article class="card reveal" style="--c:#f472b6;--d:.24s">
+        <div class="ribbon">ИМБА</div>
         <div class="avatar"><img src="avatars/rita.jpg" alt="Рита"><span>🌙</span></div>
         <h3>РИТА</h3>
         <div class="role">Глаза в ночи</div>
-        <p>20 минут в Dota. Ноль опыта — максимум наглости. Талант не купишь, он есть от природы.</p>
+        <p>20 минут в Dota, винрейт 100%. Ещё не начала играть — а уже понесла прайд на себе.</p>
         <div class="hours rare">✨ 20 мин в Dota</div>
       </article>
     </div>
@@ -705,6 +798,7 @@
 
 <!-- ================= ДИСЦИПЛИНЫ ================= -->
 <section id="games">
+  <span class="sticker" style="top:14%;right:5%;font-size:2.8rem;animation-delay:.6s" aria-hidden="true">🐔</span>
   <div class="section-inner">
     <div class="kicker reveal">/// дисциплины</div>
     <h2 class="reveal" style="--d:.05s">АРЕНЫ, ГДЕ МЫ<br><span class="grad-text">РАЗНОСИМ</span></h2>
@@ -749,8 +843,51 @@
   </div>
 </section>
 
+<!-- ================= МЕМЫ ПРО ДАНЮ ================= -->
+<section id="memes">
+  <span class="sticker" style="top:10%;left:4%;font-size:2.4rem;animation-delay:.4s" aria-hidden="true">💀</span>
+  <span class="sticker" style="bottom:8%;right:3%;font-size:2.6rem;animation-delay:1.4s" aria-hidden="true">🔥</span>
+  <div class="section-inner">
+    <div class="kicker reveal">/// покровитель фидеров</div>
+    <h2 class="reveal" style="--d:.05s">МЕМЫ ПРО ДАНЮ<br><span class="grad-text">(ОН ЗНАЕТ)</span></h2>
+
+    <div class="gal-grid">
+      <figure class="gal reveal" style="--d:.0s">
+        <img src="images/facepalm.jpg" alt="Статуя фейспалма" loading="lazy">
+        <figcaption>ДАНЯ СМОТРИТ РЕПЛЕЙ СВОЕЙ КАТКИ 🤦</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.07s">
+        <img class="pad" src="images/trophy.png" alt="Золотой трофей" loading="lazy">
+        <figcaption>ТРОФЕЙ ДАНИ: ЛУЧШИЙ ФИДЕР СЕЗОНА 🏆</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.14s">
+        <img src="images/sleep.jpg" alt="Спящий кот" loading="lazy">
+        <figcaption>ДАНЯ НА ЛЕКЦИИ. СОН: 10. ФАРМ: 0 😴</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.21s">
+        <img class="pad" src="images/dota.png" alt="Логотип Dota 2" loading="lazy">
+        <figcaption>1700 ЧАСОВ В ДОТЕ. РАНГ: СМЕЛО 🔴</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.28s">
+        <img src="images/pizza.jpg" alt="Два куска пиццы" loading="lazy">
+        <figcaption>ДАНЯ ЗАКАЗАЛ ПИЦУ. КАТКА ОТМЕНЯЕТСЯ 🍕</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.35s">
+        <img src="images/clown.jpg" alt="Клоун" loading="lazy">
+        <figcaption>ДАНЯ ПИКУЕТ ПУДЖА НА МИД. СЕРЬЁЗНО. 🤡</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ================= КРИНЖ-ГАЛЕРЕЯ ================= -->
 <section id="gallery">
+  <span class="sticker" style="top:16%;right:4%;font-size:2.4rem;animation-delay:.8s" aria-hidden="true">✨</span>
   <div class="section-inner">
     <div class="kicker reveal">/// кринж-галерея</div>
     <h2 class="reveal" style="--d:.05s">ФОТКИ ПРАЙДА<br><span class="grad-text">БЕЗ ФИЛЬТРОВ</span></h2>
@@ -806,8 +943,16 @@
 <footer>
   <div class="paws" aria-hidden="true"><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span></div>
   <div>ПАНТЕРА ТИМ © 2026 · прайд бьёт первым 🖤</div>
-  <div class="credits">фотки: Wikimedia Commons · логотипы принадлежат их владельцам</div>
+  <div class="credits">фотки: Wikimedia Commons · логотипы принадлежат их владельцам · Даня одобрил (нет)</div>
 </footer>
+
+<!-- ================= РИТА В УГЛУ ================= -->
+<div class="rita" id="rita" title="Кликни Риту 🐱" role="button" aria-label="Рита — нажми и она мяукнет">
+  <div class="rita-bubble" id="ritaBubble">МЯУ!</div>
+  <img src="avatars/rita-photo.jpg" alt="Рита">
+  <span class="ear" aria-hidden="true">🐱</span>
+  <span class="hint">кликни!</span>
+</div>
 
 <script>
   // частицы
@@ -851,62 +996,118 @@
     glow.style.transform = `translate(${e.clientX - 260}px, ${e.clientY - 260}px)`;
   });
 
-  // рык пантеры: звук через WebAudio (без файлов)
+  // кринж-метр
+  const meterBar = document.getElementById('meterBar');
+  const meterChip = document.getElementById('meterChip');
+  function updateMeter() {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const p = max > 0 ? Math.round(h.scrollTop / max * 100) : 0;
+    meterBar.style.width = p + '%';
+    meterChip.textContent = 'КРИНЖ-МЕТР: ' + p + '%' + (p >= 100 ? ' 🔥' : '');
+  }
+  addEventListener('scroll', updateMeter, { passive: true });
+  updateMeter();
+
+  // ===== ЗВУКИ (WebAudio, без файлов) =====
   let actx;
+  function audioCtx() {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === 'suspended') actx.resume();
+    return actx;
+  }
+
   function roarSound() {
     try {
-      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
-      const t = actx.currentTime, dur = 1.1;
-      const buf = actx.createBuffer(1, actx.sampleRate * dur, actx.sampleRate);
+      const ctx = audioCtx(), t = ctx.currentTime, dur = 1.1;
+      const buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
       const d = buf.getChannelData(0);
       for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 1.6);
-      const src = actx.createBufferSource(); src.buffer = buf;
-      const filt = actx.createBiquadFilter(); filt.type = 'lowpass';
+      const src = ctx.createBufferSource(); src.buffer = buf;
+      const filt = ctx.createBiquadFilter(); filt.type = 'lowpass';
       filt.frequency.setValueAtTime(900, t);
       filt.frequency.exponentialRampToValueAtTime(120, t + dur);
-      const g = actx.createGain();
+      const g = ctx.createGain();
       g.gain.setValueAtTime(0.0001, t);
       g.gain.exponentialRampToValueAtTime(0.5, t + 0.06);
       g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      const osc = actx.createOscillator(); osc.type = 'sawtooth';
+      const osc = ctx.createOscillator(); osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(130, t);
       osc.frequency.exponentialRampToValueAtTime(48, t + dur);
-      const og = actx.createGain();
+      const og = ctx.createGain();
       og.gain.setValueAtTime(0.25, t);
       og.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      src.connect(filt).connect(g).connect(actx.destination);
-      osc.connect(og).connect(actx.destination);
+      src.connect(filt).connect(g).connect(ctx.destination);
+      osc.connect(og).connect(ctx.destination);
       src.start(t); osc.start(t); osc.stop(t + dur);
     } catch (e) {}
   }
 
-  // рык по клику
-  const wrap = document.getElementById('panther');
-  wrap.addEventListener('click', () => {
-    wrap.classList.remove('roar');
-    void wrap.offsetWidth;
-    wrap.classList.add('roar');
-    roarSound();
-  });
+  function meowSound() {
+    try {
+      const ctx = audioCtx(), t = ctx.currentTime, dur = 0.6;
+      const o = ctx.createOscillator(); o.type = 'sawtooth';
+      o.frequency.setValueAtTime(420, t);
+      o.frequency.exponentialRampToValueAtTime(880, t + 0.12);
+      o.frequency.setValueAtTime(880, t + 0.22);
+      o.frequency.exponentialRampToValueAtTime(520, t + dur);
+      const vib = ctx.createOscillator(); vib.frequency.value = 9;
+      const vibG = ctx.createGain(); vibG.gain.value = 18;
+      vib.connect(vibG).connect(o.frequency);
+      const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.6;
+      f.frequency.setValueAtTime(900, t);
+      f.frequency.exponentialRampToValueAtTime(1700, t + 0.15);
+      f.frequency.exponentialRampToValueAtTime(750, t + dur);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.34, t + 0.05);
+      g.gain.setValueAtTime(0.34, t + 0.32);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(f).connect(g).connect(ctx.destination);
+      o.start(t); vib.start(t); o.stop(t + dur + 0.05); vib.stop(t + dur + 0.05);
+    } catch (e) {}
+  }
 
-  // КРИНЖ-РЕЖИМ 🌈
-  const cringeBtn = document.getElementById('cringeBtn');
-  cringeBtn.addEventListener('click', () => {
-    const on = document.body.classList.toggle('cringe');
-    cringeBtn.setAttribute('aria-pressed', on);
-    cringeBtn.textContent = on ? '🔥 КРИНЖ ВКЛЮЧЁН' : '🌈 КРИНЖ-РЕЖИМ';
-  });
+  function airhorn() {
+    try {
+      const ctx = audioCtx(), t = ctx.currentTime, dur = 0.9;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.5, t + 0.03);
+      g.gain.setValueAtTime(0.5, t + dur - 0.15);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      [466, 470, 462].forEach(fr => {
+        const o = ctx.createOscillator(); o.type = 'sawtooth';
+        o.frequency.setValueAtTime(fr, t);
+        const og = ctx.createGain(); og.gain.value = 0.16;
+        o.connect(og).connect(g); o.start(t); o.stop(t + dur);
+      });
+      g.connect(ctx.destination);
+    } catch (e) {}
+  }
 
-  // взрывы эмодзи при клике в кринж-режиме
-  const EMOJI = ['🔥','🐾','💖','💯','✨','😎','🐔','👑','🌪️','🐆'];
-  document.addEventListener('click', e => {
-    if (!document.body.classList.contains('cringe')) return;
-    for (let i = 0; i < 10; i++) {
+  function popSound() {
+    try {
+      const ctx = audioCtx(), t = ctx.currentTime, dur = 0.09;
+      const o = ctx.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(700, t);
+      o.frequency.exponentialRampToValueAtTime(180, t + dur);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.25, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g).connect(ctx.destination);
+      o.start(t); o.stop(t + dur);
+    } catch (e) {}
+  }
+
+  // эмодзи-взрыв
+  function spawnEmoji(x, y, list, n) {
+    for (let i = 0; i < (n || 8); i++) {
       const s = document.createElement('span');
       s.className = 'boom';
-      s.textContent = EMOJI[Math.floor(Math.random() * EMOJI.length)];
-      s.style.left = (e.clientX + (Math.random() * 80 - 40)) + 'px';
-      s.style.top = (e.clientY + (Math.random() * 40 - 20)) + 'px';
+      s.textContent = list[Math.floor(Math.random() * list.length)];
+      s.style.left = (x + (Math.random() * 80 - 40)) + 'px';
+      s.style.top = (y + (Math.random() * 40 - 20)) + 'px';
       s.style.fontSize = (Math.random() * 22 + 16) + 'px';
       s.style.setProperty('--dx', (Math.random() * 140 - 70) + 'px');
       s.style.setProperty('--rot', (Math.random() * 360 - 180) + 'deg');
@@ -914,6 +1115,73 @@
       document.body.appendChild(s);
       setTimeout(() => s.remove(), 1700);
     }
+  }
+
+  // рык по клику на пантеру
+  const wrap = document.getElementById('panther');
+  wrap.addEventListener('click', e => {
+    wrap.classList.remove('roar');
+    void wrap.offsetWidth;
+    wrap.classList.add('roar');
+    roarSound();
+    if (document.body.classList.contains('cringe')) spawnEmoji(e.clientX, e.clientY, ['🔥','🐾','💥'], 6);
+  });
+
+  // КРИНЖ-РЕЖИМ 🌈 (+ гудок)
+  const cringeBtn = document.getElementById('cringeBtn');
+  cringeBtn.addEventListener('click', () => {
+    const on = document.body.classList.toggle('cringe');
+    cringeBtn.setAttribute('aria-pressed', on);
+    cringeBtn.textContent = on ? '🔥 КРИНЖ ВКЛЮЧЁН' : '🌈 КРИНЖ-РЕЖИМ';
+    airhorn();
+  });
+
+  // взрывы эмодзи при клике в кринж-режиме
+  document.addEventListener('click', e => {
+    if (!document.body.classList.contains('cringe')) return;
+    if (e.target.closest('.rita')) return; // у Риты свои сердечки
+    spawnEmoji(e.clientX, e.clientY, ['🔥','🐾','💖','💯','✨','😎','🐔','👑','🌪️','🐆'], 10);
+  });
+
+  // клик по пантерам состава → фразы + поп
+  const cardPhrases = [
+    ['АНКА! 🐆','ещё 1700 часов!','варды — для слабых','я не фидер, я разведка'],
+    ['по плану, братья ⚡','я читал патчноут','тики-таки, всё под контролем'],
+    ['РАШ Б! 🔥','я в драке, чё','нужен киллка','смерть — это статистика'],
+    ['мяу! 💖','я в деле!','винрейт 100%','н trained by cats'],
+  ];
+  document.querySelectorAll('.team-grid .card').forEach((card, i) => {
+    card.addEventListener('click', e => {
+      popSound();
+      const arr = cardPhrases[i % cardPhrases.length];
+      const b = document.createElement('div');
+      b.className = 'card-bubble';
+      b.textContent = arr[Math.floor(Math.random() * arr.length)];
+      card.appendChild(b);
+      setTimeout(() => b.remove(), 1600);
+      if (document.body.classList.contains('cringe')) spawnEmoji(e.clientX, e.clientY, ['✨','💯','🔥'], 5);
+    });
+  });
+
+  // РИТА в углу: клик → мяу + фраза + сердечки
+  const ritaPhrases = [
+    'МЯУ! 🐾','я фидер, но жёсткая 💅','20 минут в доте — и уже имба',
+    'мур-мур, прайд 💖','гоните катку, я готова','кто тронул мою катку? 😾',
+    'погладь пантеру, она хорошая','риб играть? легко',
+  ];
+  const rita = document.getElementById('rita');
+  const ritaBubble = document.getElementById('ritaBubble');
+  let ritaClicks = 0, ritaTimer;
+  rita.addEventListener('click', e => {
+    meowSound();
+    ritaClicks++;
+    ritaBubble.textContent = ritaClicks >= 12
+      ? 'ладно, хватит мяукать 😾'
+      : ritaPhrases[Math.floor(Math.random() * ritaPhrases.length)];
+    ritaBubble.classList.add('show');
+    clearTimeout(ritaTimer);
+    ritaTimer = setTimeout(() => ritaBubble.classList.remove('show'), 1900);
+    spawnEmoji(e.clientX || innerWidth - 70, e.clientY || innerHeight - 70, ['💖','🐾','✨','😺'], 7);
   });
 </script>
 </body>
