@@ -555,6 +555,7 @@
     p3d_pro: '3D-профи: 10+ очков 🕹',
     site_break: 'Вандализм 💀',
     ad_hater: 'Враг рекламы 🚫',
+    sfx_used: 'Кнопкоман 🔘',
   };
   function renderAchCount() {
     const seen = JSON.parse(localStorage.getItem('panthera_ach') || '[]');
@@ -668,6 +669,29 @@
     localStorage.setItem('panthera_gb', JSON.stringify(gbMsgs));
     gbInput.value = '';
     renderGb();
+
+  // ===== КНОПКИ УГАРА =====
+  const sfxMap = {
+    trombone: () => playFile('sounds/trombone.mp3', 0.7),
+    wilhelm: () => playFile('sounds/wilhelm.ogg', 0.7),
+    drumroll: () => playFile('sounds/drumroll.mp3', 0.6),
+    kazoo: () => playFile('sounds/kazoo.mp3', 0.7),
+    boing: () => boingSound(),
+    horn: () => airhorn(),
+    roar: () => roarSound(),
+    pop: () => popSound(),
+  };
+  document.querySelectorAll('.sfx-btn').forEach(b => {
+    b.addEventListener('click', e => {
+      const fn = sfxMap[b.dataset.s];
+      if (fn) fn();
+      b.classList.remove('pressed');
+      void b.offsetWidth;
+      b.classList.add('pressed');
+      spawnEmoji(e.clientX, e.clientY, ['🔊','🎵','💥'], 3);
+      unlock('sfx_used');
+    });
+  });
     unlock('guestbook');
     popSound();
   }

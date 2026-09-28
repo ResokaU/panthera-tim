@@ -62,6 +62,32 @@
     } catch (e) {}
   }
 
+  function boingSound() {
+    try {
+      const ctx = audioCtx(), t = ctx.currentTime, dur = 0.5;
+      const o = ctx.createOscillator(); o.type = 'triangle';
+      o.frequency.setValueAtTime(500, t);
+      o.frequency.exponentialRampToValueAtTime(90, t + dur);
+      const v = ctx.createOscillator(); v.frequency.value = 14;
+      const vg = ctx.createGain(); vg.gain.value = 60;
+      v.connect(vg).connect(o.frequency);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.35, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g).connect(master);
+      o.start(t); v.start(t); o.stop(t + dur); v.stop(t + dur);
+    } catch (e) {}
+  }
+
+  function playFile(src, vol) {
+    try {
+      const a = new Audio(src);
+      a.volume = vol || 0.6;
+      a.play().catch(() => {});
+      return a;
+    } catch (e) {}
+  }
+
   function popSound() {
     try {
       navigator.vibrate && navigator.vibrate(12);
@@ -102,6 +128,7 @@
     { name: '🪗 УЛЬТРА ПОЛКА', src: 'sounds/polka.mp3' },
     { name: '🤯 8-БИТ НАРУШЕНИЕ УШЕЙ', src: 'sounds/ear.mp3' },
     { name: '🎪🤖 8-БИТ ЦИРК', src: 'sounds/bitcircus.mp3' },
+    { name: '🪗 ГИМН НА КАЗУ', src: 'sounds/kazoo-gymn.mp3' },
     { name: '🔊 ХАРДБАСС ПРАЙДА (СИНТ)', synth: true },
   ];
   let trackI = -1, audioEl = null, station = 1, musicStep = 0, musicTimer = null;
