@@ -482,47 +482,6 @@
   .paws span:nth-child(even){transform:translateY(7px)}
   .credits{margin-top:.7rem;font-size:.78rem;opacity:.6}
 
-  /* ---------- РИТА-ВИДЖЕТ ---------- */
-  .rita{
-    position:fixed;right:22px;bottom:26px;z-index:80;
-    width:96px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
-  }
-  .rita img{
-    width:92px;height:92px;border-radius:50%;object-fit:cover;display:block;
-    border:3px solid transparent;
-    background:
-      linear-gradient(#0b0a1d,#0b0a1d) padding-box,
-      linear-gradient(135deg,#f472b6,#a855f7,#22d3ee) border-box;
-    box-shadow:0 0 28px rgba(244,114,182,.55), 0 10px 30px rgba(0,0,0,.5);
-    animation:wiggle 2.8s ease-in-out infinite;
-  }
-  @keyframes wiggle{
-    0%,100%{transform:rotate(-7deg)}
-    50%{transform:rotate(7deg)}
-  }
-  .rita:hover img{animation-duration:.7s}
-  .rita .ear{
-    position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(10deg);
-    font-size:1.4rem;filter:drop-shadow(0 0 8px rgba(244,114,182,.8));
-  }
-  .rita .hint{
-    position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
-    font-family:'Unbounded',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.12em;
-    color:#f9a8d4;background:#0b0a1d;
-    border:1px solid rgba(244,114,182,.45);border-radius:99px;
-    padding:.22rem .6rem;white-space:nowrap;
-  }
-  .rita-bubble{
-    position:absolute;bottom:112%;right:0;
-    background:#fff;color:#111;
-    font-family:'Comic Sans MS',cursive;font-weight:700;font-size:.92rem;
-    padding:.55rem .9rem;border-radius:16px 16px 2px 16px;
-    box-shadow:0 10px 30px rgba(0,0,0,.45);
-    opacity:0;pointer-events:none;white-space:nowrap;
-    transition:opacity .2s, transform .2s;
-  }
-  .rita-bubble.show{opacity:1;transform:translateY(-6px)}
-
   /* ---------- эмодзи-взрывы ---------- */
   .boom{
     position:fixed;z-index:99;pointer-events:none;
@@ -581,8 +540,6 @@
     .nav-links a.nav-page{display:none}
     .panther-wrap{width:min(400px,86vw)}
     .hero::before{opacity:.12}
-    .rita{width:74px;right:14px;bottom:20px}
-    .rita img{width:70px;height:70px}
     .meter-chip{left:12px;bottom:12px;font-size:.55rem}
   }
   @media (prefers-reduced-motion:reduce){
@@ -624,7 +581,7 @@
     <p class="tagline">
       Мы — <b>кибер-прайд</b>: Dota 2, Standoff 2, Chicken Gun и Minecraft.
       Да, мы все <b>бездари и фидеры</b> — но <b>жёсткие</b>.
-      Нажми на пантеру, если не трусишь. И покорми Риту в углу. 🐾
+      Нажми на пантеру, если не трусишь. 🐾
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="https://discord.gg/ranMNxS6A" target="_blank" rel="noopener">
@@ -922,6 +879,21 @@
         <img src="images/panther2.jpg" alt="Чёрный ягуар смотрит" loading="lazy">
         <figcaption>ВАЛЕРА СМОТРИТ, КАК ТЫ ФИДИШЬ 👁️</figcaption>
       </figure>
+
+      <figure class="gal reveal" style="--d:.42s">
+        <img src="images/danya-real.jpg" alt="Даня играет в Dota с платком на голове" loading="lazy">
+        <figcaption>ДАНЯ В ШТАБЕ. СТЕЛС-БИЛД АКТИВЕН 🥷</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.49s">
+        <img src="images/danya-popit.jpg" alt="Даня с попитом" loading="lazy">
+        <figcaption>ДАНЯ ПОПИТ. КОММЕНТАРИИ ЛИШНИЕ 🫧</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.56s">
+        <img src="images/maxon2.jpg" alt="Максим в блонде с попитом" loading="lazy">
+        <figcaption>МАКСИМ ВЫШЕЛ В БЛОНД. РАШ Б 😎</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -945,14 +917,6 @@
   <div>ПАНТЕРА ТИМ © 2026 · прайд бьёт первым 🖤</div>
   <div class="credits">фотки: Wikimedia Commons · логотипы принадлежат их владельцам · Даня одобрил (нет)</div>
 </footer>
-
-<!-- ================= РИТА В УГЛУ ================= -->
-<div class="rita" id="rita" title="Кликни Риту 🐱" role="button" aria-label="Рита — нажми и она мяукнет">
-  <div class="rita-bubble" id="ritaBubble">МЯУ!</div>
-  <img src="avatars/rita-photo.jpg" alt="Рита">
-  <span class="ear" aria-hidden="true">🐱</span>
-  <span class="hint">кликни!</span>
-</div>
 
 <script>
   // частицы
@@ -1043,31 +1007,6 @@
     } catch (e) {}
   }
 
-  function meowSound() {
-    try {
-      const ctx = audioCtx(), t = ctx.currentTime, dur = 0.6;
-      const o = ctx.createOscillator(); o.type = 'sawtooth';
-      o.frequency.setValueAtTime(420, t);
-      o.frequency.exponentialRampToValueAtTime(880, t + 0.12);
-      o.frequency.setValueAtTime(880, t + 0.22);
-      o.frequency.exponentialRampToValueAtTime(520, t + dur);
-      const vib = ctx.createOscillator(); vib.frequency.value = 9;
-      const vibG = ctx.createGain(); vibG.gain.value = 18;
-      vib.connect(vibG).connect(o.frequency);
-      const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.6;
-      f.frequency.setValueAtTime(900, t);
-      f.frequency.exponentialRampToValueAtTime(1700, t + 0.15);
-      f.frequency.exponentialRampToValueAtTime(750, t + dur);
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.34, t + 0.05);
-      g.gain.setValueAtTime(0.34, t + 0.32);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      o.connect(f).connect(g).connect(ctx.destination);
-      o.start(t); vib.start(t); o.stop(t + dur + 0.05); vib.stop(t + dur + 0.05);
-    } catch (e) {}
-  }
-
   function airhorn() {
     try {
       const ctx = audioCtx(), t = ctx.currentTime, dur = 0.9;
@@ -1139,7 +1078,6 @@
   // взрывы эмодзи при клике в кринж-режиме
   document.addEventListener('click', e => {
     if (!document.body.classList.contains('cringe')) return;
-    if (e.target.closest('.rita')) return; // у Риты свои сердечки
     spawnEmoji(e.clientX, e.clientY, ['🔥','🐾','💖','💯','✨','😎','🐔','👑','🌪️','🐆'], 10);
   });
 
@@ -1161,27 +1099,6 @@
       setTimeout(() => b.remove(), 1600);
       if (document.body.classList.contains('cringe')) spawnEmoji(e.clientX, e.clientY, ['✨','💯','🔥'], 5);
     });
-  });
-
-  // РИТА в углу: клик → мяу + фраза + сердечки
-  const ritaPhrases = [
-    'МЯУ! 🐾','я фидер, но жёсткая 💅','20 минут в доте — и уже имба',
-    'мур-мур, прайд 💖','гоните катку, я готова','кто тронул мою катку? 😾',
-    'погладь пантеру, она хорошая','риб играть? легко',
-  ];
-  const rita = document.getElementById('rita');
-  const ritaBubble = document.getElementById('ritaBubble');
-  let ritaClicks = 0, ritaTimer;
-  rita.addEventListener('click', e => {
-    meowSound();
-    ritaClicks++;
-    ritaBubble.textContent = ritaClicks >= 12
-      ? 'ладно, хватит мяукать 😾'
-      : ritaPhrases[Math.floor(Math.random() * ritaPhrases.length)];
-    ritaBubble.classList.add('show');
-    clearTimeout(ritaTimer);
-    ritaTimer = setTimeout(() => ritaBubble.classList.remove('show'), 1900);
-    spawnEmoji(e.clientX || innerWidth - 70, e.clientY || innerHeight - 70, ['💖','🐾','✨','😺'], 7);
   });
 </script>
 </body>
