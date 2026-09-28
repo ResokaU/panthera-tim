@@ -855,6 +855,10 @@
   body.music-on .sticker{animation-duration:1.1s}
   body.music-on .marquee-track{animation-duration:12s}
 
+  /* ---------- угар ---------- */
+  body{transition:transform .4s ease}
+  body.ugar{transform:rotate(180deg)}
+
   /* ---------- стена бурмалды ---------- */
   .b-sub{color:var(--muted);max-width:34rem;margin:-1.6rem auto 2.4rem;text-align:center;line-height:1.6}
   .burmala-grid{
@@ -1510,6 +1514,21 @@
         <img src="images/maxon2.jpg" alt="Максим в блонде с попитом" loading="lazy">
         <figcaption>МАКСИМ ВЫШЕЛ В БЛОНД. РАШ Б 😎</figcaption>
       </figure>
+
+      <figure class="gal reveal" style="--d:.63s">
+        <img src="images/duck.jpg" alt="Кричащая утка" loading="lazy">
+        <figcaption>РЕАКЦИЯ ВАЛЕРЫ НА ВОПРОС „А КАКОЙ ПЛАН?“ 🦆</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.7s">
+        <img src="images/frog.jpg" alt="Лягушка крупным планом" loading="lazy">
+        <figcaption>ПРАЙД-БОТ В 3 ЧАСА НОЧИ 🐸</figcaption>
+      </figure>
+
+      <figure class="gal reveal" style="--d:.77s">
+        <img src="images/goat.jpg" alt="Коза-статуя" loading="lazy">
+        <figcaption>ТАК ВЫГЛЯДИТ СОПЕРНИК ПОСЛЕ НАШЕГО РАШ Б 🐐</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -1563,6 +1582,7 @@
     <div class="burmala-btns reveal" style="--d:.15s">
       <button class="btn btn-ghost" id="shuffleBurmala">🌀 ПЕРЕМЕШАТЬ БУРМАЛДУ</button>
       <button class="btn btn-primary" id="nothingBtn">КНОПКА НИЧЕГО</button>
+      <button class="btn btn-ghost" id="ugarBtn">🤸 УГАР НА 5 СЕК</button>
     </div>
     <div class="nothing-note" id="nothingNote"></div>
   </div>
@@ -1702,6 +1722,7 @@
 
   function popSound() {
     try {
+      navigator.vibrate && navigator.vibrate(12);
       const ctx = audioCtx(), t = ctx.currentTime, dur = 0.09;
       const o = ctx.createOscillator(); o.type = 'sine';
       o.frequency.setValueAtTime(700, t);
@@ -2116,10 +2137,16 @@
       if (votes[name] % 50 === 0) airhorn();
     });
   });
-  // МЕМ-РАДИО 🎵 (синтез в браузере, без файлов)
+  // МЕМ-РАДИО 🎵 v2 — реальные треки (Wikimedia Commons) + синт-хардбасс
   const musBtn = document.getElementById('musicBtn');
-  const stations = ['🎵 МЕМ-РАДИО: ВЫКЛ','🔊 ХАРДБАСС ПРАЙДА','🎮 8-БИТ МЕМЫ','🐱 МЯУ-РЕМИКС'];
-  let station = 0, musicStep = 0, musicTimer = null;
+  const radioTracks = [
+    { name: '🎪 ЦИРК ПРИШЁЛ', src: 'sounds/circus.mp3' },
+    { name: '🪗 УЛЬТРА ПОЛКА', src: 'sounds/polka.mp3' },
+    { name: '🤯 8-БИТ НАРУШЕНИЕ УШЕЙ', src: 'sounds/ear.mp3' },
+    { name: '🎪🤖 8-БИТ ЦИРК', src: 'sounds/bitcircus.mp3' },
+    { name: '🔊 ХАРДБАСС ПРАЙДА (СИНТ)', synth: true },
+  ];
+  let trackI = -1, audioEl = null, station = 1, musicStep = 0, musicTimer = null;
 
   function kick(t) {
     const o = audioCtx().createOscillator(), g = audioCtx().createGain();
@@ -2140,14 +2167,6 @@
     o.connect(fl).connect(g).connect(audioCtx().destination);
     o.start(t); o.stop(t + 0.19);
   }
-  function chipNote(t, f) {
-    const o = audioCtx().createOscillator(), g = audioCtx().createGain();
-    o.type = 'square'; o.frequency.setValueAtTime(f, t);
-    g.gain.setValueAtTime(0.1, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
-    o.connect(g).connect(audioCtx().destination);
-    o.start(t); o.stop(t + 0.16);
-  }
   function hat(t) {
     const ctx = audioCtx();
     const buf = ctx.createBuffer(1, ctx.sampleRate * 0.04, ctx.sampleRate);
@@ -2159,61 +2178,80 @@
     src.connect(f).connect(g).connect(ctx.destination);
     src.start(t);
   }
-  function meowBlip(t, mult) {
-    const ctx = audioCtx(), dur = 0.32;
-    const o = ctx.createOscillator(); o.type = 'sawtooth';
-    o.frequency.setValueAtTime(420 * mult, t);
-    o.frequency.exponentialRampToValueAtTime(880 * mult, t + 0.1);
-    o.frequency.exponentialRampToValueAtTime(520 * mult, t + dur);
-    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.5;
-    f.frequency.setValueAtTime(950 * mult, t);
-    f.frequency.exponentialRampToValueAtTime(1400 * mult, t + dur);
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.28, t + 0.04);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(f).connect(g).connect(ctx.destination);
-    o.start(t); o.stop(t + dur);
-  }
 
   function scheduleMusicStep() {
     const ctx = audioCtx();
     const t = ctx.currentTime + 0.06;
     const s = musicStep % 16;
-    if (station === 1) {
-      if (s % 4 === 0) kick(t);
-      if (s % 4 === 2) bassNote(t, [55, 55, 65.41, 49][Math.floor(musicStep / 4) % 4]);
-      if (s % 2 === 1) hat(t);
-    } else if (station === 2) {
-      const m = [523, 0, 659, 784, 659, 0, 523, 392, 523, 0, 659, 880, 784, 659, 523, 0][s];
-      if (m) chipNote(t, m);
-      if (s % 4 === 2) hat(t);
-    } else if (station === 3) {
-      if (s % 4 === 0) meowBlip(t, [1, 1.4, 0.8, 1.2][Math.floor(musicStep / 4) % 4]);
-      if (s % 8 === 4) kick(t);
-    }
+    if (s % 4 === 0) kick(t);
+    if (s % 4 === 2) bassNote(t, [55, 55, 65.41, 49][Math.floor(musicStep / 4) % 4]);
+    if (s % 2 === 1) hat(t);
     musicStep++;
   }
-  function stopMusic() {
+  function stopSynth() {
     if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+  }
+  function startSynth() {
+    stopSynth();
+    audioCtx();
+    musicTimer = setInterval(scheduleMusicStep, 200);
+  }
+  function stopAllMusic() {
+    if (audioEl) { audioEl.pause(); audioEl = null; }
+    stopSynth();
     document.body.classList.remove('music-on');
   }
-  function startMusic() {
-    stopMusic();
-    if (station === 0) return;
-    audioCtx();
-    musicTimer = setInterval(scheduleMusicStep, station === 2 ? 170 : 200);
-    document.body.classList.add('music-on');
-  }
   musBtn.addEventListener('click', () => {
-    station = (station + 1) % stations.length;
-    musBtn.textContent = stations[station];
-    musBtn.classList.toggle('on', station > 0);
-    if (station === 0) stopMusic();
-    else { popSound(); startMusic(); }
+    trackI = (trackI + 1) % (radioTracks.length + 1);
+    stopAllMusic();
+    if (trackI === radioTracks.length) {
+      musBtn.textContent = '🎵 МЕМ-РАДИО: ВЫКЛ';
+      musBtn.classList.remove('on');
+      return;
+    }
+    const tr = radioTracks[trackI];
+    musBtn.textContent = tr.name;
+    musBtn.classList.add('on');
+    document.body.classList.add('music-on');
+    popSound();
+    if (tr.src) {
+      audioEl = new Audio(tr.src);
+      audioEl.loop = true;
+      audioEl.volume = 0.45;
+      audioEl.play().catch(() => {
+        station = 1; startSynth();
+        musBtn.textContent = '🔊 ХАРДБАСС ПРАЙДА (СИНТ)';
+      });
+    } else {
+      station = 1; startSynth();
+    }
   });
   addEventListener('keydown', e => {
     if (e.key.toLowerCase() === 'm' && !e.repeat) musBtn.click();
+  });
+
+  // УГАР НА 5 СЕК
+  const ugarBtn = document.getElementById('ugarBtn');
+  let ugarOn = false;
+  ugarBtn.addEventListener('click', () => {
+    if (ugarOn) return;
+    ugarOn = true;
+    airhorn();
+    document.body.classList.add('ugar');
+    setTimeout(() => {
+      document.body.classList.remove('ugar');
+      ugarOn = false;
+    }, 5000);
+  });
+
+  // глиттер-хвост за курсором в кринж-режиме
+  let lastTrail = 0;
+  addEventListener('mousemove', e => {
+    if (!document.body.classList.contains('cringe')) return;
+    const now = Date.now();
+    if (now - lastTrail < 150) return;
+    lastTrail = now;
+    spawnEmoji(e.clientX, e.clientY, ['✨','💜'], 1);
   });
 
   // СТЕНА БУРМАЛДЫ
