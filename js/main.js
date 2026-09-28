@@ -671,6 +671,8 @@
     renderGb();
 
   // ===== КНОПКИ УГАРА =====
+  ['sounds/trombone.mp3', 'sounds/wilhelm.ogg', 'sounds/drumroll.mp3', 'sounds/kazoo.mp3']
+    .forEach(src => { const a = new Audio(src); a.preload = 'auto'; });
   const sfxMap = {
     trombone: () => playFile('sounds/trombone.mp3', 0.7),
     wilhelm: () => playFile('sounds/wilhelm.ogg', 0.7),
